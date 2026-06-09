@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playbook del Comité de Transformación ADEX</title>
+    <style>
+        :root {
+            --primary: #003B73; 
+            --secondary: #36C5F0; 
+            --accent: #E01E5A; 
+            --bg-color: #F4F7F9;
+            --text-main: #2D3748;
+            --sidebar-bg: #002A5A;
+            --border-color: #E2E8F0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .app-container {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+        }
+        
+        /* SIDEBAR: Modern App Style */
+        .sidebar {
+            width: 320px;
+            background: var(--sidebar-bg);
+            box-shadow: 4px 0 15px rgba(0,0,0,0.08);
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            color: #F1F5F9;
+            z-index: 100;
+        }
+        
+        /* Sidebar Header (Logo and Title) */
+        .sidebar-header {
+            padding: 30px 25px 25px 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .sidebar-header:hover { opacity: 0.85; }
+        .adex-logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            padding-right: 15px;
+            border-right: 1px solid rgba(255,255,255,0.2);
+        }
+        .adex-logo-main {
+            font-family: 'Arial Black', Impact, sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            font-style: italic;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            margin: 0;
+            padding: 0;
+        }
+        .adex-logo-sub {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-size: 6px;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+        .sidebar-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: #E2E8F0;
+            line-height: 1.3;
+            letter-spacing: 0.3px;
+        }
+
+        /* Sidebar Content & Scrollbar */
+        .sidebar-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+        .sidebar-content::-webkit-scrollbar { width: 5px; }
+        .sidebar-content::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-content::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 10px; }
+        .sidebar-content::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+
+        /* Sidebar Menu Items (Pill Style) */
+        .block-header {
+            background-color: rgba(255,255,255,0.05);
+            padding: 12px 20px;
+            font-weight: 600;
+            font-size: 13.5px;
+            color: #FFFFFF;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s ease;
+            margin: 8px 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.02);
+        }
+        .block-header:hover {
+            background-color: rgba(255,255,255,0.12);
+            transform: translateX(3px);
+        }
+        .block-body { display: none; padding: 5px 20px 10px 20px; }
+        .block-body.active { display: block; animation: slideDownMenu 0.3s ease-out; }
+        
+        @keyframes slideDownMenu {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .subtitle-item {
+            padding: 8px 15px 8px 15px;
+            cursor: pointer;
+            font-size: 13px;
+            color: #94A3B8;
+            transition: all 0.2s ease;
+            line-height: 1.4;
+            border-radius: 6px;
+            margin: 2px 0;
+        }
+        .subtitle-item:hover {
+            background-color: rgba(54, 197, 240, 0.1);
+            color: #FFFFFF;
+        }
+        
+        /* FOOTER SIDEBAR: Alineado a la izquierda */
+        .sidebar-footer {
+            padding: 20px 25px;
+            font-size: 12px;
+            color: #94A3B8;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            background-color: rgba(0,0,0,0.15);
+            text-align: left; 
+        }
+        .sidebar-footer strong { color: var(--secondary); font-weight: 700; }
+        .sidebar-footer .year { display: block; margin-top: 4px; font-size: 11px; opacity: 0.7; }
+
+        /* CONTENT AREA */
+        .content-area {
+            flex-grow: 1;
+            padding: 50px 40px;
+            overflow-y: auto;
+            background-color: #F8FAFC;
+            background-image: repeating-linear-gradient(
+                -45deg,
+                transparent,
+                transparent 10px,
+                rgba(0, 59, 115, 0.02) 10px,
+                rgba(0, 59, 115, 0.02) 11px
+            );
+        }
+        .content-card {
+            background-color: #FFFFFF;
+            padding: 50px 60px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.02);
+            max-width: 820px;
+            margin: 0 auto;
+            line-height: 1.7;
+            position: relative;
+        }
+        
+        .fade-slide-in {
+            animation: fadeSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-card h2 { color: var(--primary); font-size: 26px; margin-top: 0; margin-bottom: 25px; font-weight: 700; letter-spacing: -0.5px; border-bottom: 2px solid #F1F5F9; padding-bottom: 15px;}
+        .content-card h3 { color: var(--text-main); font-size: 18px; margin-top: 30px; margin-bottom: 15px; font-weight: 600; }
+        .content-card p, .content-card li { font-size: 15px; color: #334155; }
+        
+        /* CSS DIAGRAMAS CORPORATIVOS FLATS */
+        .css-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px; 
+            background: #F8FAFC;
+            padding: 25px 20px; 
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+        .diagram-box {
+            background: white;
+            padding: 12px 20px; 
+            border-radius: 4px;
+            font-weight: 600;
+            color: var(--primary);
+            text-align: center;
+            width: 85%; 
+            box-sizing: border-box;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #E2E8F0;
+            font-size: 14px;
+        }
+        .diagram-box.highlight-blue { border-left: 5px solid var(--secondary); }
+        .diagram-box.highlight-red { border-left: 5px solid var(--accent); }
+        .diagram-box.highlight-dark { background: var(--primary); color: white; border:none;}
+        
+        .diagram-row {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            width: 85%;
+        }
+        .diagram-row .diagram-box { width: 100%; } 
+        .diagram-arrow { color: #CBD5E0; font-size: 18px; font-weight: bold; margin: 0; line-height: 1; }
+        
+        /* Círculos 3.5.1 */
+        .diagram-circle {
+            background: var(--primary); color: white;
+            width: 65px; height: 65px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            text-align: center; font-size: 12px; font-weight: 600; margin: 0 auto;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .diagram-circle-lg {
+            background: var(--primary); color: white;
+            width: 90px; height: 90px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            text-align: center; font-size: 13.5px; font-weight: 600; margin: 0 auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        .diagram-step {
+            background: var(--text-main); color: white;
+            padding: 8px 15px; border-radius: 4px; font-size: 12.5px; font-weight: 500;
+        }
+        
+        /* Tooltip interactivo */
+        .tooltip { position: relative; display: inline-block; cursor: pointer; }
+        .tooltip .tooltiptext {
+            visibility: hidden; width: 280px; background-color: #1E293B; color: #FFFFFF !important;
+            text-align: left; border-radius: 8px; padding: 15px; position: absolute; z-index: 100;
+            bottom: 110%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.2s;
+            font-size: 13px; font-weight: normal; line-height: 1.5; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            pointer-events: none; border: 1px solid #334155;
+        }
+        .tooltip .tooltiptext * { color: #FFFFFF !important; }
+        .tooltip .tooltiptext::after {
+            content: ""; position: absolute; top: 100%; left: 50%; margin-left: -6px;
+            border-width: 6px; border-style: solid;
+            border-color: #1E293B transparent transparent transparent;
+        }
+        .tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
+        .tooltiptext ul { margin: 5px 0; padding-left: 20px; }
+
+        /* Cajas de alerta vivas */
+        .alert-box {
+            background: #E6FFFA; 
+            padding: 20px 25px; 
+            border-radius: 12px; 
+            border-left: 6px solid var(--secondary); 
+            font-size: 15px; 
+            color: var(--text-main);
+            margin: 20px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+        .alert-box strong { color: var(--primary); }
+
+        /* Listas y Tablas */
+        .principio-box { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #F1F5F9; }
+        .principio-box:last-child { border-bottom: none; }
+        .principio-box strong { color: var(--primary); display: block; margin-bottom: 6px; font-size: 15px; }
+        
+        .escalamiento-row {
+            display: flex; padding: 15px 20px; border-bottom: 1px solid #F1F5F9; align-items: flex-start;
+        }
+        .escalamiento-row:last-child { border-bottom: none; }
+        .escalamiento-icon { width: 35%; font-weight: 600; color: var(--primary); font-size: 14.5px; display: flex; align-items: center; gap: 8px; }
+        .escalamiento-text { width: 65%; color: #4A5568; font-size: 14.5px; }
+        
+        /* WELCOME SCREEN STYLES */
+        .hero-title { color: var(--primary); font-size: 34px; font-weight: 800; line-height: 1.3; margin: 0 0 20px 0; border:none;}
+        .hero-text { font-size: 18px; color: #475569; line-height: 1.6; margin: 0 auto 35px auto; max-width: 90%; text-align: center;}
+        .hero-btn {
+            background-color: #0055A4; color: white; border: none;
+            padding: 12px 28px; border-radius: 8px; font-size: 15px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 10px rgba(0, 85, 164, 0.2);
+        }
+        .hero-btn:hover { background-color: var(--primary); transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- FULL HEIGHT SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-header" onclick="loadWelcome()" title="Volver al inicio">
+                <div class="adex-logo-container">
+                    <div class="adex-logo-main">ADEX</div>
+                    <div class="adex-logo-sub">ASOCIACIÓN DE EXPORTADORES</div>
+                </div>
+                <div class="sidebar-title">Playbook Lab<br>Comité de<br>Transformación</div>
+            </div>
+
+            <div class="sidebar-content">
+                <div class="block-header" onclick="toggleBlock('b0')"><span>📖 1. Introducción</span> <span>▼</span></div>
+                <div class="block-body" id="b0">
+                    <div class="subtitle-item" onclick="loadContent('int-1-1')">1.1 ¿Qué es este Playbook?</div>
+                    <div class="subtitle-item" onclick="loadContent('int-1-2')">1.2 Antes de iniciar su lectura</div>
+                    <div class="subtitle-item" onclick="loadContent('int-1-3')">1.3 ¿Cómo utilizar este Playbook?</div>
+                    <div class="subtitle-item" onclick="loadContent('int-1-4')">1.4 Un documento en evolución</div>
+                    <div class="subtitle-item" onclick="loadContent('int-1-5')">1.5 Hablando el mismo idioma</div>
+                </div>
+
+                <div class="block-header" onclick="toggleBlock('b1')"><span>🎯 2. Modelo Transformación</span> <span>▼</span></div>
+                <div class="block-body" id="b1">
+                    <div class="subtitle-item" onclick="loadContent('mod-2-1')">2.1 Modelo Integral de Transformación</div>
+                    <div class="subtitle-item" onclick="loadContent('mod-2-2')">2.2 Ambidiestralidad Organizacional</div>
+                    <div class="subtitle-item" onclick="loadContent('mod-2-3')">2.3 Ruta Estratégica y Despliegue</div>
+                    <div class="subtitle-item" onclick="loadContent('mod-2-4')">2.4 Principios del Modelo</div>
+                </div>
+
+                <div class="block-header" onclick="toggleBlock('b2')"><span>👥 3. Comité Transformación</span> <span>▼</span></div>
+                <div class="block-body" id="b2">
+                    <div class="subtitle-item" onclick="loadContent('com-3-1')">3.1 Definición y Propósito</div>
+                    <div class="subtitle-item" onclick="loadContent('com-3-2')">3.2 Rol y Gobernanza</div>
+                    <div class="subtitle-item" onclick="loadContent('com-3-3')">3.3 Composición y Estructura</div>
+                    <div class="subtitle-item" onclick="loadContent('com-3-4-1')">3.4.1 Reglas de Convivencia</div>
+                    <div class="subtitle-item" onclick="loadContent('com-3-4-2')">3.4.2 Cadencia de actividades</div>
+                    <div class="subtitle-item" onclick="loadContent('com-3-4-3')">3.4.3 Gestión de Sesiones</div>
+                    <div class="subtitle-item" onclick="loadContent('com-3-4-4')">3.4.4 Bloqueos y Escalamiento</div>
+                    <div class="subtitle-item" onclick="loadContent('com-3-5-1')">3.5.1 Visión del Ciclo Estratégico</div>
+                    <div class="subtitle-item" onclick="loadContent('com-3-5-2')">3.5.2 Ceremonias Institucionales</div>
+                    <div class="subtitle-item" onclick="loadContent('com-3-5-3')">3.5.3 Gestión de la Disciplina</div>
+                    <div class="subtitle-item" onclick="loadContent('com-3-5-4')">3.5.4 Visibilidad y Comunicación</div>
+                </div>
+
+                <div class="block-header" onclick="toggleBlock('b4')"><span>📁 4.1 Portafolio Iniciativas</span> <span>▼</span></div>
+                <div class="block-body" id="b4">
+                    <div class="subtitle-item" onclick="loadContent('por-4-1-1')">4.1.1 Naturaleza y alcance</div>
+                    <div class="subtitle-item" onclick="loadContent('por-4-1-2')">4.1.2 Responsabilidades del Comité</div>
+                    <div class="subtitle-item" onclick="loadContent('por-4-1-3')">4.1.3 Mecanismos de incorporación</div>
+                    <div class="subtitle-item" onclick="loadContent('por-4-1-4')">4.1.4 Framework operativo</div>
+                </div>
+
+                <div class="block-header" onclick="toggleBlock('b3')"><span>🚀 4.2 Tribus Transformación</span> <span>▼</span></div>
+                <div class="block-body" id="b3">
+                    <div class="subtitle-item" onclick="loadContent('tri-4-2-1')">4.2.1 Naturaleza y propósito</div>
+                    <div class="subtitle-item" onclick="loadContent('tri-4-2-2')">4.2.2 Ciclo de vida</div>
+                    <div class="subtitle-item" onclick="loadContent('tri-4-2-3')">4.2.3 Criterios de conformación</div>
+                    <div class="subtitle-item" onclick="loadContent('tri-4-2-4')">4.2.4 Activación de tribus</div>
+                    <div class="subtitle-item" onclick="loadContent('tri-4-2-5')">4.2.5 Rol del Comité</div>
+                    <div class="subtitle-item" onclick="loadContent('tri-4-2-6')">4.2.6 Modelo operativo</div>
+                </div>
+            </div>
+            <!-- Footer Alineado a la izquierda -->
+            <div class="sidebar-footer">
+                Elaborado por <strong>AmbideXtro</strong><br>
+                <span class="year">2026</span>
+            </div>
+        </div>
+
+        <!-- ÁREA DE CONTENIDO -->
+        <div class="content-area">
+            <div class="content-card fade-slide-in" id="main-content" style="padding: 60px 80px;">
+                <div class="welcome-container" style="text-align: center; padding: 40px 20px;">
+                    <h1 class="hero-title">Bienvenido al Playbook interactivo del Comité de Transformación de ADEX.</h1>
+                    <p class="hero-text">Explora el menú de la izquierda para navegar ágilmente por todos los acápites de transformación.</p>
+                    <button class="hero-btn" onclick="toggleBlock('b0')">Iniciar exploración →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const welcomeHTML = `
+            <div class="welcome-container" style="text-align: center; padding: 40px 20px;">
+                <h1 class="hero-title">Bienvenido al Playbook interactivo del Comité de Transformación de ADEX.</h1>
+                <p class="hero-text">Explora el menú de la izquierda para navegar ágilmente por todos los acápites de transformación.</p>
+                <button class="hero-btn" onclick="toggleBlock('b0')">Iniciar exploración →</button>
+            </div>
+        `;
+
+        const playbookData = {
+            // BLOQUE 1: INTRODUCCIÓN
+            'int-1-1': `
+                <h2>📖 1.1 ¿Qué es este Playbook?</h2>
+                <p>El presente Playbook constituye la guía marco para el funcionamiento del Comité de Transformación y la gestión del Modelo de Transformación de ADEX<span style="display:none">[cite: 1]</span>.</p>
+                <p>Su propósito es proporcionar un marco común de referencia que permita al Comité sostener alineamiento estratégico, coordinación transversal, disciplina de ejecución y capacidad de adaptación para movilizar la transformación institucional de manera continua, promoviendo una organización cada vez más cliente céntrica y orientada a la generación de valor<span style="display:none">[cite: 1]</span>.</p>
+                <p>Más que un documento de consulta, este Playbook busca convertirse en una herramienta práctica para orientar decisiones, fortalecer la articulación entre actores y sostener la evolución del modelo en el tiempo<span style="display:none">[cite: 1]</span>.</p>
+            `,
+            'int-1-2': `
+                <h2>💡 1.2 Antes de iniciar su lectura</h2>
+                <p>La transformación no ocurre únicamente cuando activamos iniciativas o ponemos en marcha nuevos mecanismos. También ocurre cuando somos capaces de observar los desafíos desde nuevas perspectivas, cuestionar nuestras propias creencias y construir soluciones de manera colaborativa<span style="display:none">[cite: 1]</span>.</p>
+                <div class="alert-box">
+                    <em>"Leer como estudiante, reflexionar como líder y actuar como agente de transformación."</em><span style="display:none">[cite: 1]</span>
+                </div>
+            `,
+            'int-1-3': `
+                <h2>🧭 1.3 ¿Cómo utilizar este Playbook?</h2>
+                <p>Este documento no ha sido diseñado para ser leído una sola vez y luego archivado. Su principal valor radica en servir como referencia para la gestión cotidiana del modelo y para la toma de decisiones del Comité de Transformación<span style="display:none">[cite: 1]</span>.</p>
+                <p>Dependiendo de la necesidad, el Playbook puede utilizarse para:<span style="display:none">[cite: 1]</span></p>
+                <ul>
+                    <li>Comprender la lógica y estructura del Modelo de Transformación<span style="display:none">[cite: 1]</span>.</li>
+                    <li>Consultar roles, responsabilidades y mecanismos de gobernanza<span style="display:none">[cite: 1]</span>.</li>
+                    <li>Orientar la gestión del portafolio de iniciativas<span style="display:none">[cite: 1]</span>.</li>
+                    <li>Activar, acompañar o cerrar tribus de transformación<span style="display:none">[cite: 1]</span>.</li>
+                    <li>Preparar y conducir ceremonias institucionales<span style="display:none">[cite: 1]</span>.</li>
+                    <li>Resolver dudas respecto a la gestión de la transformación en ADEX<span style="display:none">[cite: 1]</span>.</li>
+                </ul>
+            `,
+            'int-1-4': `
+                <h2>🌱 1.4 Un documento en evolución</h2>
+                <p>El presente Playbook debe entenderse como una herramienta viva de trabajo<span style="display:none">[cite: 1]</span>.</p>
+                <p>Su contenido podrá evolucionar y actualizarse periódicamente conforme el modelo de transformación gane madurez, emerjan nuevos aprendizajes, cambien las prioridades institucionales o se requiera fortalecer mecanismos y dinámicas para sostener la evolución continua de ADEX<span style="display:none">[cite: 1]</span>.</p>
+            `,
+            'int-1-5': `
+                <h2>📚 1.5 Hablando el mismo idioma (Glosario)</h2>
+                <p>Términos clave para construir un entendimiento común sobre la gestión de la transformación:<span style="display:none">[cite: 1]</span></p>
+                
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 25px;">
+                    <div class="diagram-box tooltip" style="width: 47%; font-size:13px;">
+                        Modelo de Transformación 🔍
+                        <span class="tooltiptext">Sistema de gestión que conecta estrategia, mecanismos de ejecución, aceleradores institucionales y resultados para movilizar la transformación de ADEX<span style="display:none">[cite: 1]</span>.</span>
+                    </div>
+                    <div class="diagram-box tooltip" style="width: 47%; font-size:13px;">
+                        Comité de Transformación 🔍
+                        <span class="tooltiptext">Instancia encargada de impulsar, articular y sostener la transformación institucional<span style="display:none">[cite: 1]</span>.</span>
+                    </div>
+                    <div class="diagram-box tooltip highlight-blue" style="width: 47%; font-size:13px;">
+                        Ruta Estratégica 🔍
+                        <span class="tooltiptext">Conjunto de prioridades, objetivos y resultados que orientan la evolución de ADEX<span style="display:none">[cite: 1]</span>.</span>
+                    </div>
+                    <div class="diagram-box tooltip highlight-blue" style="width: 47%; font-size:13px;">
+                        Línea de Negocio 🔍
+                        <span class="tooltiptext">Unidad económica responsable de generar valor mediante la oferta de productos y servicios institucionales hacia un segmento específico<span style="display:none">[cite: 1]</span>.</span>
+                    </div>
+                    <div class="diagram-box tooltip highlight-blue" style="width: 47%; font-size:13px;">
+                        OKR (Obj. y Resultados) 🔍
+                        <span class="tooltiptext">Protocolo de gestión que permite definir qué se busca lograr (Objetivo) y cómo se evidencia el proceso de avance hacia dicho resultado (Resultados Clave)<span style="display:none">[cite: 1]</span>.</span>
+                    </div>
+                    <div class="diagram-box tooltip highlight-blue" style="width: 47%; font-size:13px;">
+                        KR Estratégico 🔍
+                        <span class="tooltiptext">Resultado clave que permite medir el avance de un objetivo estratégico<span style="display:none">[cite: 1]</span>.</span>
+                    </div>
+                    <div class="diagram-box tooltip highlight-blue" style="width: 47%; font-size:13px;">
+                        KR Táctico 🔍
+                        <span class="tooltiptext">Resultado clave que contribuye al logro de resultados estratégicos desde líneas de negocios, gerencias, tribus u otros equipos<span style="display:none">[cite: 1]</span>.</span>
+                    </div>
+                    <div class="diagram-box tooltip highlight-red" style="width: 47%; font-size:13px; color: var(--accent);">
+                        Tribu 🔍
+                        <span class="tooltiptext">Equipo multidisciplinario conformado para abordar retos de transformación con alto nivel de incertidumbre, complejidad y colaboración transversal<span style="display:none">[cite: 1]</span>.</span>
+                    </div>
+                    <div class="diagram-box tooltip highlight-red" style="width: 47%; font-size:13px;">
+                        Portafolio de iniciativas 🔍
+                        <span class="tooltiptext">Conjunto priorizado de iniciativas, proyectos y esfuerzos de transformación gestionados por el Comité<span style="display:none">[cite: 1]</span>.</span>
+                    </div>
+                    <div class="diagram-box tooltip" style="width: 47%; font-size:13px; color: #4A5568;">
+                        Ceremonia institucional 🔍
+                        <span class="tooltiptext">Espacio formal de coordinación, seguimiento o toma de decisiones que sostiene el funcionamiento del modelo, que se repite cada ciclo<span style="display:none">[cite: 1]</span>.</span>
+                    </div>
+                    <div class="diagram-box tooltip" style="width: 47%; font-size:13px; color: #4A5568;">
+                        Acelerador Institucional 🔍
+                        <span class="tooltiptext">Capacidad organizacional que habilita la transformación (cultura, datos, experiencia, tecnología, agilidad, etc.)<span style="display:none">[cite: 1]</span>.</span>
+                    </div>
+                    <div class="diagram-box tooltip" style="width: 47%; font-size:13px; color: #4A5568;">
+                        Mecanismo de Ejecución 🔍
+                        <span class="tooltiptext">Instrumento mediante el cual la organización moviliza la estrategia hacia la acción (tribus, iniciativas, proyectos, experimentos)<span style="display:none">[cite: 1]</span>.</span>
+                    </div>
+                    <div class="diagram-box tooltip" style="width: 47%; font-size:13px; color: #4A5568;">
+                        Sponsor 🔍
+                        <span class="tooltiptext">Líder que legitima, habilita y remueve obstáculos para facilitar el avance de la transformación<span style="display:none">[cite: 1]</span>.</span>
+                    </div>
+                    <div class="diagram-box tooltip" style="width: 47%; font-size:13px; color: #4A5568;">
+                        Experimento 🔍
+                        <span class="tooltiptext">Acción controlada orientada a validar hipótesis y generar aprendizaje antes de escalar una solución<span style="display:none">[cite: 1]</span>.</span>
+                    </div>
+                    <div class="diagram-box tooltip" style="width: 47%; font-size:13px; color: #4A5568;">
+                        Proyecto 🔍
+                        <span class="tooltiptext">Esfuerzo temporal orientado a generar un resultado definido dentro del modelo de transformación bajo un espacio conocido (baja incertidumbre y complejidad)<span style="display:none">[cite: 1]</span>.</span>
+                    </div>
+                    <div class="diagram-box tooltip highlight-dark" style="width: 100%; font-size:13px;">
+                        Ambidiestralidad Organizacional 🔍
+                        <span class="tooltiptext">Capacidad de una organización para gestionar simultáneamente la operación actual y la construcción de capacidades para el futuro<span style="display:none">[cite: 1]</span>.</span>
+                    </div>
+                </div>
+            `,
+
+            // BLOQUE 2: MODELO
+            'mod-2-1': `
+                <h2>🧩 2.1 Modelo Integral de Transformación</h2>
+                <p>Sistema mediante el cual ADEX traduce sus prioridades estratégicas en acciones y capacidades concretas<span style="display:none">[cite: 1]</span>.</p>
+                
+                <div class="css-diagram">
+                    <div class="diagram-box highlight-dark" style="width: 80%;">Estrategia<br><span style="font-weight:normal; font-size:12.5px; opacity:0.8;">(Define el rumbo y las prioridades)</span></div>
+                    <div class="diagram-arrow">⬇</div>
+                    <div class="diagram-row">
+                        <div class="diagram-box tooltip highlight-red" style="color: var(--accent);">
+                            Aceleradores Institucionales 🔍
+                            <span class="tooltiptext">
+                                <ul style="margin:5px; padding-left:15px; font-size:12.5px;">
+                                    <li>Cultura y personas</li>
+                                    <li>Datos para la toma de decisiones</li>
+                                    <li>Experiencia del cliente (procesos end to end)</li>
+                                    <li>Tecnología</li>
+                                    <li>Agilidad organizacional</li>
+                                    <li>Nuevas herramientas y prácticas organizacionales</li>
+                                </ul>
+                            </span>
+                        </div>
+                        <div class="diagram-box tooltip highlight-blue" style="color: var(--primary);">
+                            Mecanismos de Ejecución 🔍
+                            <span class="tooltiptext">
+                                <ul style="margin:5px; padding-left:15px; font-size:12.5px;">
+                                    <li>Portafolio de iniciativas</li>
+                                    <li>Tribus de transformación</li>
+                                    <li>Experimentos y exploraciones</li>
+                                    <li>Proyectos</li>
+                                </ul>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="diagram-arrow">⬇</div>
+                    <div class="diagram-box highlight-dark" style="width: 80%;">Resultados y Evolución Continua</div>
+                </div>
+
+                <h3>Foco Organizacional:</h3>
+                <p>Frente a ello, el modelo busca:<span style="display:none">[cite: 1]</span></p>
+                <ul>
+                    <li>traducir progresivamente la estrategia en ejecución y resultados<span style="display:none">[cite: 1]</span>.</li>
+                    <li>conectar los distintos niveles de decisión y ejecución<span style="display:none">[cite: 1]</span>.</li>
+                    <li>generar foco organizacional en las prioridades que impulsan la generación de valor<span style="display:none">[cite: 1]</span>.</li>
+                    <li>fortalecer una cultura de gestión cliente céntrica<span style="display:none">[cite: 1]</span>.</li>
+                    <li>fortalecer la capacidad de adaptación institucional<span style="display:none">[cite: 1]</span>.</li>
+                    <li>y sostener una lógica de evolución y aprendizaje continuo<span style="display:none">[cite: 1]</span>.</li>
+                </ul>
+            `,
+            'mod-2-2': `
+                <h2>⚖️ 2.2 Ambidiestralidad Organizacional</h2>
+                <p>A través de su modelo de transformación, ADEX busca no solo fortalecer la operación actual, sino también desarrollar capacidades que le permitan adaptarse<span style="display:none">[cite: 1]</span>.</p>
+                <ul>
+                    <li><strong>Explotar el presente:</strong> Asegurar el desempeño y sostenibilidad del negocio actual. Fortaleciendo la operación, la eficiencia, la gestión del desempeño y la ejecución de las prioridades actuales<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>Explorar el futuro:</strong> Explorar nuevas capacidades, soluciones y formas de generar valor futuro. Impulsando innovación, aprendizaje, adaptación, experimentación y nuevas capacidades para la evolución organizacional<span style="display:none">[cite: 1]</span>.</li>
+                </ul>
+            `,
+            'mod-2-3': `
+                <h2>🏗️ 2.3 Ruta Estratégica y Arquitectura de Despliegue</h2>
+                <p>Mecanismo de alineamiento entre estrategia y ejecución, decantando prioridades hasta la acción<span style="display:none">[cite: 1]</span>.</p>
+                
+                <div class="css-diagram">
+                    <div class="diagram-box highlight-dark" style="width: 90%;">Pilares y Objetivos Estratégicos</div>
+                    <div class="diagram-arrow">⬇</div>
+                    
+                    <div class="diagram-box" style="background:var(--secondary); color:white; border:none; width: 80%;">KRs Estratégicos</div>
+                    <div class="diagram-arrow">⬇</div>
+                    
+                    <div class="diagram-box" style="width: 70%;">KRs Líneas de negocio</div>
+                    <div class="diagram-arrow">⬇</div>
+                    
+                    <div class="diagram-box highlight-red" style="width: 60%; color:var(--primary);">KRs Tácticos<br><span style="font-weight:normal; font-size:12px; color:#64748B;">Gerencias / Tribus</span></div>
+                    <div class="diagram-arrow">⬇</div>
+                    
+                    <div class="diagram-box" style="width: 50%; color:#475569; border-color:#CBD5E0;">Equipos<br><span style="font-weight:normal; font-size:11.5px;">(Exploración y Explotación)</span></div>
+                </div>
+            `,
+            'mod-2-4': `
+                <h2>⭐ 2.4 Principios del Modelo</h2>
+                <div class="principio-box">
+                    <strong>2.4.1 Cliente céntrico y generación de valor</strong>
+                    Transformamos para generar valor; generamos valor poniendo al cliente en el centro. Las decisiones e iniciativas deben orientarse a comprender mejor las necesidades de clientes, asociados y grupos de interés, generando resultados que fortalezcan el propósito y la sostenibilidad de ADEX<span style="display:none">[cite: 1]</span>.
+                </div>
+                <div class="principio-box">
+                    <strong>2.4.2 La estrategia debe traducirse en ejecución</strong>
+                    La estrategia solo cobra sentido cuando logra convertirse en decisiones, iniciativas y resultados concretos. Por ello, el modelo busca asegurar que los objetivos estratégicos, los mecanismos de ejecución y las acciones desarrolladas mantengan coherencia con el rumbo definido<span style="display:none">[cite: 1]</span>.
+                </div>
+                <div class="principio-box">
+                    <strong>2.4.3 Las decisiones deben sustentarse en evidencia</strong>
+                    Las decisiones deben apoyarse en información relevante, métricas de valor y señales estratégicas que permitan priorizar, ajustar y actuar oportunamente. El propósito no es aumentar el control, sino fortalecer la capacidad institucional para tomar mejores decisiones<span style="display:none">[cite: 1]</span>.
+                </div>
+                <div class="principio-box">
+                    <strong>2.4.4 El foco multiplica el impacto</strong>
+                    La transformación requiere capacidad de priorización y concentración de esfuerzos. Por ello, el modelo promueve enfocar capacidades, recursos e iniciativas en aquello que genera mayor contribución estratégica y generación de valor<span style="display:none">[cite: 1]</span>.
+                </div>
+                <div class="principio-box">
+                    <strong>2.4.5 La transformación se construye colaborando y aprendiendo</strong>
+                    Los desafíos de transformación rara vez pueden resolverse desde una sola área o perspectiva. Por ello, el modelo promueve articulación transversal, aprendizaje continuo y capacidad de adaptación para fortalecer la evolución institucional de manera sostenida<span style="display:none">[cite: 1]</span>.
+                </div>
+            `,
+
+            // BLOQUE 3: COMITÉ
+            'com-3-1': `
+                <h2>🌟 3.1 Definición y Propósito</h2>
+                <div class="alert-box">
+                    <p style="margin-top:0;"><strong>¡El Comité nace como uno de los principales motores de transformación dentro de ADEX!</strong> 🚀<span style="display:none">[cite: 1]</span></p>
+                    <p>Es el espacio responsable de impulsar y sostener la transformación institucional de forma articulada, conectando la estrategia con la ejecución bajo una lógica de evolución continua<span style="display:none">[cite: 1]</span>.</p>
+                    <p style="margin-bottom:0;">Un espacio llamado a impulsar la ambidiestralidad en la organización, ayudando a articular iniciativas que permitan no solo fortalecer y sostener el negocio actual 🛡️, sino también explorar nuevas oportunidades, capacidades y formas de generar valor hacia el futuro 🔭<span style="display:none">[cite: 1]</span>.</p>
+                </div>
+            `,
+            'com-3-2': `
+                <h2>🎬 3.2 Rol del Comité dentro de la Gobernanza</h2>
+                <p>Articulador entre estrategia, transformación y ejecución<span style="display:none">[cite: 1]</span>.</p>
+                <div class="css-diagram">
+                    <div class="diagram-box tooltip highlight-dark" style="width: 85%;">
+                        Alta Dirección y Sponsors 🔍
+                        <span class="tooltiptext">Definen el rumbo estratégico, brindan respaldo institucional, alineamiento estratégico y capacidad de destrabe para decisiones o iniciativas de impacto transversal<span style="display:none">[cite: 1]</span>.</span>
+                    </div>
+                    <div class="diagram-arrow">⬇</div>
+                    <div class="diagram-row" style="align-items: center;">
+                        <div class="diagram-box tooltip highlight-blue" style="font-size:12.5px; padding:8px;">
+                            Comités Especializados 🔍
+                            <span class="tooltiptext">Espacios de coordinación y definición de lineamientos en ámbitos estratégicos transversales para la organización<span style="display:none">[cite: 1]</span>.</span>
+                        </div>
+                        <div class="diagram-box tooltip highlight-red" style="padding:12px;">
+                            Comité de Transformación 🔍
+                            <span class="tooltiptext">Cumple el rol de articulador entre estrategia, transformación y ejecución, facilitando que las prioridades estratégicas se movilicen<span style="display:none">[cite: 1]</span>.</span>
+                        </div>
+                        <div class="diagram-box tooltip highlight-blue" style="font-size:12.5px; padding:8px;">
+                            Líneas de Negocio 🔍
+                            <span class="tooltiptext">Impulsan la evolución continua de la línea de negocio bajo su responsabilidad, promoviendo la incorporación de aprendizajes, capacidades y oportunidades<span style="display:none">[cite: 1]</span>.</span>
+                        </div>
+                    </div>
+                    <div class="diagram-arrow">⬇</div>
+                    <div class="diagram-row">
+                        <div class="diagram-box tooltip" style="border-color:#003B73;">
+                            Gerencias<br><span style="font-weight:normal; font-size:11.5px; color:#64748B;">(Explotación)</span> 🔍
+                            <span class="tooltiptext">Son responsables de sostener la operación, ejecutar prioridades institucionales y asegurar resultados sobre el negocio actual<span style="display:none">[cite: 1]</span>.</span>
+                        </div>
+                        <div class="diagram-box tooltip highlight-red" style="color:var(--primary);">
+                            Tribus<br><span style="font-weight:normal; font-size:11.5px; color:#64748B;">(Exploración)</span> 🔍
+                            <span class="tooltiptext">Abordan retos estratégicos con altos niveles de incertidumbre, complejidad y colaboración transversal, permitiendo explorar nuevas capacidades<span style="display:none">[cite: 1]</span>.</span>
+                        </div>
+                    </div>
+                </div>
+            `,
+            'com-3-3': `
+                <h2>👥 3.3 Composición y Estructura del Comité</h2>
+                <p>El Comité integra capacidades complementarias y responsables<span style="display:none">[cite: 1]</span>:</p>
+                <ul>
+                    <li><strong>Líder del Comité (Innovación y Adaptación Estratégica):</strong> Sandra Meyer<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>Coordinador (Cultura y Talento):</strong> Alisson Bravo<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>Financiero:</strong> Felipe Sabogal<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>Experiencia:</strong> Claudia Tapia<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>Tecnologías:</strong> Raúl Lizárraga<span style="display:none">[cite: 1]</span>.</li>
+                </ul>
+                <p><strong>Sponsors Institucionales:</strong> Doménica Castañeda, Jorge Robinet y un Sponsor Político<span style="display:none">[cite: 1]</span>.</p>
+            `,
+            'com-3-4-1': `
+                <h2>🤝 3.4.1 Reglas de Convivencia</h2>
+                <ul>
+                    <li><strong>Puntualidad:</strong> Se tolera una tardanza al mes por miembro<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>Comunicación abierta y transparencia:</strong> Avisar oportunamente en caso de inconvenientes<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>Atención plena:</strong> No teléfonos ni laptops durante las sesiones<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>Toma de decisiones:</strong> Los acuerdos se toman por votación y mayoría<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>Responsabilidad:</strong> Cada miembro es responsable de ponerse al día en caso de ausencia<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>Desacuerdo constructivo:</strong> Las diferencias se abordan desde el respeto y construcción conjunta<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>Registro:</strong> Principales decisiones registradas para facilitar el seguimiento<span style="display:none">[cite: 1]</span>.</li>
+                </ul>
+            `,
+            'com-3-4-2': `
+                <h2>⏱️ 3.4.2 Cadencia de actividades del Comité</h2>
+                <p>El Comité deberá sostener una dinámica continua de trabajo. Considerará como mínimo:<span style="display:none">[cite: 1]</span></p>
+                <ul>
+                    <li><strong>Sesión semanal del Comité:</strong> Espacio principal para revisar prioridades, avances, bloqueos y seguimiento general<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>Seguimiento de iniciativas estratégicas (equipos y tribus activas): quincenal<span style="display:none">[cite: 1]</span>.</strong></li>
+                    <li><strong>Revisión del portafolio de iniciativas:</strong> Mensual<span style="display:none">[cite: 1]</span>.</li>
+                </ul>
+            `,
+            'com-3-4-3': `
+                <h2>🗓️ 3.4.3 Gestión de Sesiones</h2>
+                <p>Las sesiones deberán gestionarse de manera estructurada y enfocada:<span style="display:none">[cite: 1]</span></p>
+                <ul>
+                    <li><strong>Antes de la sesión:</strong> Definición de agenda, convocatoria y preparación de materiales<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>Durante la sesión:</strong> Facilitación (mantener foco, evitar reportes operativos) y cierre (validar acuerdos por votación)<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>Después de la sesión:</strong> Registro, envío oportuno y seguimiento de acuerdos pendientes<span style="display:none">[cite: 1]</span>.</li>
+                </ul>
+            `,
+            'com-3-4-4': `
+                <h2>🚦 3.4.4 Gestión de Bloqueos y Escalamiento</h2>
+                <p>Los bloqueos deberán resolverse inicialmente en la instancia más cercana. El Comité actuará cuando exceda el alcance operativo<span style="display:none">[cite: 1]</span>.</p>
+                
+                <div style="border: 1px solid #E2E8F0; border-radius: 6px; background: white; margin-top: 15px;">
+                    <div class="escalamiento-row">
+                        <div class="escalamiento-icon"><span style="font-size:18px;">🛡️</span> Tribus:</div>
+                        <div class="escalamiento-text">1ra instancia: Líder de línea de negocio. 2da instancia: Comité de Transformación<span style="display:none">[cite: 1]</span>.</div>
+                    </div>
+                    <div class="escalamiento-row" style="background: #F8FAFC;">
+                        <div class="escalamiento-icon"><span style="font-size:18px;">💡</span> Iniciativas y <br><span style="font-size:18px;">⚙️</span> Aceleradores:</div>
+                        <div class="escalamiento-text">1ra instancia: Miembro del Comité responsable. 2da instancia: Sponsor estratégico<span style="display:none">[cite: 1]</span>.</div>
+                    </div>
+                    <div class="escalamiento-row">
+                        <div class="escalamiento-icon"><span style="font-size:18px;">🧭</span> Disciplina Estratégica:</div>
+                        <div class="escalamiento-text">1ra instancia: Comité de Transformación. 2da instancia: Sponsor político o estratégico<span style="display:none">[cite: 1]</span>.</div>
+                    </div>
+                </div>
+            `,
+            'com-3-5-1': `
+                <h2>🔄 3.5.1 Visión general del Ciclo Estratégico</h2>
+                <div class="css-diagram" style="padding: 35px 20px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                        
+                        <div style="text-align: center; flex: 1;">
+                            <div class="diagram-circle-lg" style="background:#003B73;">1<br>Definición</div>
+                            <div style="margin-top: 15px; font-size: 13px; color: #475569;">
+                                <strong>Ago - Set</strong><br><span style="font-size: 12.5px;">Visión y OKRs<span style="display:none">[cite: 1]</span></span>
+                            </div>
+                        </div>
+                        
+                        <div class="diagram-arrow">➡</div>
+                        
+                        <div style="text-align: center; flex: 1;">
+                            <div class="diagram-circle-lg" style="background:var(--secondary);">2<br>Despliegue</div>
+                            <div style="margin-top: 15px; font-size: 13px; color: #475569;">
+                                <strong>Ene - Feb</strong><br><span style="font-size: 12.5px;">Gerencias y Kick-off<span style="display:none">[cite: 1]</span></span>
+                            </div>
+                        </div>
+                        
+                        <div class="diagram-arrow">➡</div>
+                        
+                        <div style="text-align: center; flex: 1;">
+                            <div class="diagram-circle-lg" style="background:var(--accent);">3<br>Ejecución</div>
+                            <div style="margin-top: 15px; font-size: 13px; color: #475569;">
+                                <strong>Mar - Dic</strong><br><span style="font-size: 12.5px;">Monitoreo a tribus<span style="display:none">[cite: 1]</span></span>
+                            </div>
+                        </div>
+                        
+                        <div class="diagram-arrow">➡</div>
+                        
+                        <div style="text-align: center; flex: 1;">
+                            <div class="diagram-circle-lg" style="background:#0F172A;">4<br>Aprendizaje</div>
+                            <div style="margin-top: 15px; font-size: 13px; color: #475569;">
+                                <strong>Mar - Dic</strong><br><span style="font-size: 12.5px;">Reflexión trimestral<span style="display:none">[cite: 1]</span></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            `,
+            'com-3-5-2': `
+                <h2>📅 3.5.2 Ceremonias Institucionales del Modelo</h2>
+                <p>Constituyen los principales espacios mediante los cuales ADEX gestiona y sostiene su ciclo estratégico<span style="display:none">[cite: 1]</span>.</p>
+                <p>Permiten:<span style="display:none">[cite: 1]</span></p>
+                <ul>
+                    <li>Sostener foco organizacional sobre las prioridades estratégicas<span style="display:none">[cite: 1]</span>.</li>
+                    <li>Monitorear resultados, métricas, iniciativas y retos<span style="display:none">[cite: 1]</span>.</li>
+                    <li>Identificar riesgos, bloqueos o desalineamientos relevantes<span style="display:none">[cite: 1]</span>.</li>
+                    <li>Habilitar decisiones y acciones correctivas oportunas<span style="display:none">[cite: 1]</span>.</li>
+                    <li>Fortalecer coordinación transversal y promover aprendizaje<span style="display:none">[cite: 1]</span>.</li>
+                </ul>
+            `,
+            'com-3-5-3': `
+                <h2>🔍 3.5.3 Gestión de la Disciplina Estratégica</h2>
+                <p>Capacidad institucional de sostener consistentemente dinámicas para mantener vigente la estrategia<span style="display:none">[cite: 1]</span>.</p>
+                <p>El Comité deberá:<span style="display:none">[cite: 1]</span></p>
+                <ul>
+                    <li>Asegurar la continuidad de las ceremonias<span style="display:none">[cite: 1]</span>.</li>
+                    <li>Impulsar el uso del dashboard estratégico como herramienta central<span style="display:none">[cite: 1]</span>.</li>
+                    <li>Promover accountability sobre compromisos y métricas<span style="display:none">[cite: 1]</span>.</li>
+                    <li>Identificar señales de pérdida de foco y activar refuerzos o acompañamiento<span style="display:none">[cite: 1]</span>.</li>
+                </ul>
+            `,
+            'com-3-5-4': `
+                <h2>📣 3.5.4 Visibilidad y Comunicación Estratégica</h2>
+                <p>La transformación solo genera alineamiento cuando es visible y comprendida por la organización. Frentes sugeridos:<span style="display:none">[cite: 1]</span></p>
+                <ul>
+                    <li><strong>Seguimiento y visibilidad estratégica:</strong> Dashboard, reportes ejecutivos, radar de transformación<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>Socialización y alineamiento organizacional:</strong> ADEX Talks, espacios de sharing, sesiones abiertas<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>Cultura y apropiación:</strong> Campañas internas, reconocimientos, difusión de historias y buenas prácticas<span style="display:none">[cite: 1]</span>.</li>
+                </ul>
+            `,
+
+            // BLOQUE 4.1: PORTAFOLIO
+            'por-4-1-1': `
+                <h2>📁 4.1.1 Naturaleza y alcance del portafolio</h2>
+                <p>El portafolio concentra, articula y da visibilidad a las iniciativas que movilizan la transformación. Posee naturaleza híbrida:<span style="display:none">[cite: 1]</span></p>
+                <ul>
+                    <li><strong>De Operación:</strong> Iniciativas vinculadas a aceleradores estratégicos (tecnología, datos, cultura)<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>Exploratorias:</strong> Experimentos y validaciones orientadas a construir el futuro (Tribus)<span style="display:none">[cite: 1]</span>.</li>
+                </ul>
+                <p><em>Nota: No concentra todos los proyectos de ADEX, solo los de transformación.</em><span style="display:none">[cite: 1]</span></p>
+            `,
+            'por-4-1-2': `
+                <h2>✅ 4.1.2 Responsabilidades del Comité sobre el portafolio</h2>
+                <p>El Comité cumple un rol de articulación, visibilidad y seguimiento estratégico. No reemplaza la gestión operativa de las áreas<span style="display:none">[cite: 1]</span>.</p>
+                <ul>
+                    <li>Mantiene visibilidad y trazabilidad sobre las iniciativas<span style="display:none">[cite: 1]</span>.</li>
+                    <li>Realiza seguimiento mensual a avance, evolución y riesgos<span style="display:none">[cite: 1]</span>.</li>
+                    <li>Impulsa iniciativas vinculadas a aceleradores<span style="display:none">[cite: 1]</span>.</li>
+                    <li>Define ajustes, pausas o cierre cuando corresponda<span style="display:none">[cite: 1]</span>.</li>
+                </ul>
+            `,
+            'por-4-1-3': `
+                <h2>📥 4.1.3 Mecanismos de incorporación de iniciativas</h2>
+                <p>Las iniciativas podrán incorporarse desde:<span style="display:none">[cite: 1]</span></p>
+                <ul>
+                    <li><strong>Gerencias o equipos funcionales:</strong> Esfuerzos vinculados a aceleradores y capacidades prioritarias<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>Tribus:</strong> Exploraciones o experimentos para construir nuevas capacidades<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>El Comité de Transformación:</strong> Identificación de necesidades institucionales que requieran ser impulsadas<span style="display:none">[cite: 1]</span>.</li>
+                </ul>
+            `,
+            'por-4-1-4': `
+                <h2>⚙️ 4.1.4 Framework operativo para la gestión</h2>
+                <p>La gestión operativa se desarrollará mediante un framework específico que permita incorporar, evaluar, priorizar y realizar seguimiento a las iniciativas vinculadas al modelo<span style="display:none">[cite: 1]</span>.</p>
+                <p><em>* El detalle operativo se desarrolla en el Anexo D — Manual de gestión del portafolio de iniciativas<span style="display:none">[cite: 1]</span>.</em></p>
+            `,
+
+            // BLOQUE 4.2: TRIBUS
+            'tri-4-2-1': `
+                <h2>🔥 4.2.1 Naturaleza y propósito de las tribus</h2>
+                <p>Las tribus son espacios de articulación y ejecución transversal que ADEX activa para explorar, diseñar y movilizar iniciativas orientadas a construir el futuro de la organización<span style="display:none">[cite: 1]</span>.</p>
+                <ul>
+                    <li><strong>Foco en futuro:</strong> Preparan o habilitan el siguiente nivel<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>Foco en resultados:</strong> Existen para generar avances concretos<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>Transversalidad:</strong> Integran capacidades de distintas áreas<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>Temporalidad:</strong> Existen mientras el reto requiera un espacio dedicado<span style="display:none">[cite: 1]</span>.</li>
+                </ul>
+            `,
+            'tri-4-2-2': `
+                <h2>🔄 4.2.2 Ciclo de vida de las tribus</h2>
+                <p>Son mecanismos temporales. Atraviesan las siguientes etapas:<span style="display:none">[cite: 1]</span></p>
+                <div class="css-diagram">
+                    <div class="diagram-row" style="flex-wrap:wrap; gap:8px;">
+                        <div class="diagram-step" style="background:var(--text-main);">1. Identificación</div>
+                        <div class="diagram-arrow">➡</div>
+                        <div class="diagram-step" style="background:var(--primary);">2. Conformación</div>
+                        <div class="diagram-arrow">➡</div>
+                        <div class="diagram-step" style="background:var(--secondary); color:#1E293B;">3. Activación</div>
+                    </div>
+                    <div class="diagram-row" style="margin-top:5px; gap:8px;">
+                        <div class="diagram-step" style="background:var(--accent);">4. Operación</div>
+                        <div class="diagram-arrow">➡</div>
+                        <div class="diagram-step" style="background:#94A3B8;">5. Cierre/Transferencia</div>
+                    </div>
+                </div>
+            `,
+            'tri-4-2-3': `
+                <h2>🎯 4.2.3 Criterios para la conformación de tribus</h2>
+                <p>No todo reto requiere una tribu. Su conformación se evalúa considerando:<span style="display:none">[cite: 1]</span></p>
+                <ul>
+                    <li><strong>Contribución al futuro deseado:</strong> Construye capacidades para la visión futura<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>Nivel de complejidad:</strong> Involucra múltiples variables o dependencias<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>Nivel de incertidumbre:</strong> La solución o camino no se encuentran completamente definidos<span style="display:none">[cite: 1]</span>.</li>
+                    <li><strong>Necesidad de colaboración transversal:</strong> Requiere participación activa de distintos actores<span style="display:none">[cite: 1]</span>.</li>
+                </ul>
+            `,
+            'tri-4-2-4': `
+                <h2>🚀 4.2.4 Activación de tribus</h2>
+                <p>Proceso de activación para formalizar su instalación:<span style="display:none">[cite: 1]</span></p>
+                <ol>
+                    <li>El Comité define la conformación inicial (líder y capacidades)<span style="display:none">[cite: 1]</span>.</li>
+                    <li>Alineamiento con el líder de la línea de negocio vinculado al reto<span style="display:none">[cite: 1]</span>.</li>
+                    <li>Sesión de instalación (kick-off) para definir el Mandato de Tribu<span style="display:none">[cite: 1]</span>.</li>
+                    <li>El Comité de Transformación valida el Mandato y formaliza el inicio de operación<span style="display:none">[cite: 1]</span>.</li>
+                </ol>
+            `,
+            'tri-4-2-5': `
+                <h2>🤝 4.2.5 Rol del Comité frente a las tribus</h2>
+                <p>Instancia responsable de supervisar y dar seguimiento estratégico a las tribus activas:<span style="display:none">[cite: 1]</span></p>
+                <ul>
+                    <li>Valida conformación, activación y ajustes de alcance<span style="display:none">[cite: 1]</span>.</li>
+                    <li>Realiza seguimiento periódico a avances, riesgos y bloqueos<span style="display:none">[cite: 1]</span>.</li>
+                    <li>Facilita articulación y remueve bloqueos escalados<span style="display:none">[cite: 1]</span>.</li>
+                    <li>Define continuidad, escalamiento, pausa o cierre cuando corresponda<span style="display:none">[cite: 1]</span>.</li>
+                </ul>
+            `,
+            'tri-4-2-6': `
+                <h2>🛠️ 4.2.6 Modelo operativo de tribus</h2>
+                <p>Las tribus operarán bajo un modelo operativo específico que definirá las condiciones mínimas necesarias para su funcionamiento:<span style="display:none">[cite: 1]</span></p>
+                <ul>
+                    <li>Estructura mínima y roles<span style="display:none">[cite: 1]</span>.</li>
+                    <li>Ceremonias mínimas de coordinación y seguimiento<span style="display:none">[cite: 1]</span>.</li>
+                    <li>Mecanismos de reporte y seguimiento de avances<span style="display:none">[cite: 1]</span>.</li>
+                </ul>
+                <p><em>* El detalle operativo se desarrolla en el Anexo E - Modelo Operativo de Tribus<span style="display:none">[cite: 1]</span>.</em></p>
+            `
+        };
+
+        function loadWelcome() {
+            const mainContent = document.getElementById('main-content');
+            
+            mainContent.classList.remove('fade-slide-in');
+            void mainContent.offsetWidth; 
+            
+            mainContent.innerHTML = welcomeHTML;
+            mainContent.classList.add('fade-slide-in');
+            
+            document.querySelectorAll('.block-body').forEach(b => b.classList.remove('active'));
+        }
+
+        function toggleBlock(blockId) {
+            document.querySelectorAll('.block-body').forEach(body => {
+                if(body.id === blockId) body.classList.toggle('active');
+                else body.classList.remove('active');
+            });
+        }
+
+        function loadContent(contentId) {
+            const mainContent = document.getElementById('main-content');
+            if (playbookData[contentId]) {
+                mainContent.classList.remove('fade-slide-in');
+                void mainContent.offsetWidth; 
+                
+                mainContent.innerHTML = playbookData[contentId];
+                mainContent.classList.add('fade-slide-in');
+            }
+        }
+    </script>
+</body>
+</html>
