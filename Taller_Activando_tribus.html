@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Activando Tribus ADEX</title>
+<style>
+:root{--azul:#043b68;--azul2:#07599b;--azul3:#0b75c9;--verde:#9cc338;--verde2:#6d9d18;--texto:#082f55;--muted:#607588;--morado:#3a087b;--morado2:#7b2bd5;--naranja:#f4a000;--turquesa:#0091a4;--violeta:#6b2bb2}*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--texto);background:linear-gradient(135deg,#f7fbfd 0%,#edf6fa 100%);height:100vh;overflow:hidden}.app{display:grid;grid-template-columns:285px 1fr;height:100vh}.sidebar{background:linear-gradient(180deg,#073a67,#064a7c);color:white;padding:22px 20px;display:flex;flex-direction:column;gap:12px;box-shadow:10px 0 30px rgba(5,46,80,.12);z-index:3}.brand{display:flex;align-items:center;gap:12px}.logo{font-size:28px;font-weight:900;letter-spacing:-2px}.brand small{display:block;line-height:1.15;opacity:.9;font-size:12.5px}.line{height:1px;background:rgba(255,255,255,.25);margin:3px 0}.nav{display:flex;flex-direction:column;gap:12px;overflow-y:auto;padding-right:4px;flex:1}.nav button{border:0;text-align:left;padding:22px 16px;border-radius:18px;background:rgba(255,255,255,.11);color:white;font-size:15px;font-weight:850;cursor:pointer;transition:.2s;min-height:76px}.nav button:hover{background:rgba(255,255,255,.18);transform:translateX(3px)}.nav button.active{background:white;color:var(--azul);box-shadow:0 8px 20px rgba(0,0,0,.15)}.nav button .count{float:right;font-size:11px;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,.18);color:white}.nav button.active .count{background:#e7f2f8;color:var(--azul)}.foot{font-size:11.5px;line-height:1.35;opacity:.92}.main{position:relative;overflow:hidden}.progress{position:absolute;left:0;top:0;height:5px;background:linear-gradient(90deg,var(--verde),var(--azul3));width:0%;transition:.25s;z-index:4}.slide{display:none;animation:fade .25s ease;height:100vh;overflow-y:auto;padding:42px 56px 110px;scrollbar-gutter:stable}.slide.active{display:block}.slide.finalSlide{padding-bottom:42px}@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}.kicker{display:inline-flex;gap:8px;align-items:center;background:#dff0fa;color:var(--azul);padding:9px 15px;border-radius:999px;font-weight:900;margin-bottom:18px}.h1{font-size:54px;line-height:.98;margin:0 0 18px;letter-spacing:-2px;font-weight:500}.h2{font-size:40px;line-height:1.05;margin:0 0 18px;letter-spacing:-1px}.sub{font-size:19px;margin:0 0 28px;color:#124b7c}.p{font-size:18px;line-height:1.45;max-width:1050px}.grid{display:grid;gap:20px}.cols2{grid-template-columns:1.05fr .95fr}.cols3{grid-template-columns:repeat(3,1fr)}.card{background:rgba(255,255,255,.92);border:1px solid #d9e9f2;border-radius:20px;padding:20px;box-shadow:0 16px 38px rgba(4,59,104,.08)}.card h3{margin:0 0 10px;font-size:18px}.badge{display:inline-block;background:#eef7df;color:#49740f;border:1px solid #cfe5a1;padding:8px 12px;border-radius:999px;font-weight:900;margin:4px;font-size:13px}.btn{border:0;border-radius:16px;background:linear-gradient(135deg,var(--azul2),#0b73c7);color:white;font-size:15px;font-weight:900;padding:16px 24px;cursor:pointer;box-shadow:0 12px 25px rgba(4,80,142,.2)}.btn.secondary{background:white;color:var(--azul);border:1px solid #d6e7f0;box-shadow:none}.controls{position:absolute;right:56px;bottom:34px;display:flex;gap:14px;z-index:5}.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:34px;align-items:center;min-height:72vh}.heroVisual{height:420px;border-radius:34px;background:linear-gradient(135deg,#fff,#e7f4fb);box-shadow:0 24px 70px rgba(4,59,104,.12);position:relative;overflow:hidden;border:1px solid #d8ebf4}.people{position:absolute;inset:44px;display:grid;place-items:center}.people .circle{position:absolute;width:92px;height:92px;border-radius:50%;background:white;border:2px solid #d9e9f2;box-shadow:0 16px 38px rgba(4,59,104,.08);display:grid;place-items:center;font-size:42px}.people .c1{top:18px;left:50%;transform:translateX(-50%)}.people .c2{left:30px;top:150px}.people .c3{right:30px;top:150px}.people .c4{bottom:20px;left:50%;transform:translateX(-50%)}.people:before{content:"";position:absolute;width:280px;height:280px;border:14px solid rgba(156,195,56,.22);border-radius:50%}.people:after{content:"TRIBU";position:absolute;color:var(--azul);font-size:42px;font-weight:1000}.agendaPath{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:30px}.pathItem{background:white;border:1px solid #d9e9f2;border-radius:24px;padding:30px 18px;min-height:220px;box-shadow:0 16px 38px rgba(4,59,104,.08);position:relative}.pathItem:after{content:"→";position:absolute;right:-20px;top:50%;transform:translateY(-50%);color:var(--verde);font-size:34px;font-weight:900}.pathItem:last-child:after{display:none}.pathIcon{font-size:42px;margin-bottom:14px}.pathItem b{font-size:23px}.pathItem small{display:block;margin-top:12px;color:var(--muted);line-height:1.35;font-size:16px}.objectives{max-width:980px;background:white;border:1px solid #d9e9f2;border-radius:28px;padding:30px;box-shadow:0 16px 38px rgba(4,59,104,.08)}.objectives li{list-style:none;font-size:25px;line-height:1.35;margin:18px 0;font-weight:800}.objectives li:before{content:"✓";color:var(--verde2);font-weight:1000;margin-right:14px}.definition{background:linear-gradient(135deg,#fff,#f2f9fc);border:1px solid #cfe6f4;border-radius:26px;padding:28px;box-shadow:0 20px 50px rgba(4,59,104,.09)}.definition .quote{font-size:24px;line-height:1.35;font-weight:650;color:var(--azul);margin:0}.twoLists{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}.listBox{background:white;border:1px solid #d9e9f2;border-radius:20px;padding:20px}.listBox li{font-size:16px;margin:9px 0}.lifeWrap{display:grid;grid-template-columns:minmax(780px,1fr) 340px;gap:24px;align-items:start}.lifeCycle{position:relative;height:610px;background:rgba(255,255,255,.62);border:1px solid #d9e9f2;border-radius:34px;overflow:visible;box-shadow:0 18px 45px rgba(4,59,104,.08)}.centerCircle{position:absolute;left:50%;top:50%;width:210px;height:210px;transform:translate(-50%,-50%);border-radius:50%;background:white;border:12px solid #e2edf5;display:grid;place-items:center;text-align:center;color:var(--azul);font-size:22px;font-weight:900;box-shadow:0 16px 42px rgba(4,59,104,.11)}.ring{position:absolute;left:50%;top:50%;width:390px;height:390px;transform:translate(-50%,-50%);border-radius:50%;border:16px solid #dfeaf4}.node{position:absolute;width:210px;background:white;border:1.7px solid var(--c);border-radius:20px;padding:14px;box-shadow:0 16px 34px rgba(4,59,104,.08)}.node .num{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--c);color:white;font-weight:900;margin-bottom:6px}.node h3{margin:0 0 5px;font-size:14.5px;color:var(--c)}.node p{font-size:11.6px;line-height:1.2;margin:0 0 8px;color:#163a5b}.owner{display:block;background:#f3f8fb;border-radius:10px;padding:6px 8px;font-weight:900;font-size:11px;color:var(--texto)}.n1{left:50%;top:18px;transform:translateX(-50%);--c:#0c3f8f}.n2{right:26px;top:202px;--c:#16751d}.n3{right:155px;bottom:28px;--c:#0091a4}.n4{left:155px;bottom:28px;--c:#ed9b00}.n5{left:26px;top:202px;--c:#6b2bb2}.lifeNote{background:white;border:1px solid #d9e9f2;border-radius:24px;padding:24px;box-shadow:0 16px 38px rgba(4,59,104,.08)}.lifeNote h3{margin:0 0 12px;font-size:20px}.callout{background:linear-gradient(135deg,var(--azul),#07599b);color:white;border-radius:24px;padding:24px;box-shadow:0 18px 40px rgba(4,59,104,.18)}.callout h3{margin:0 0 8px;color:white}.roleMap{display:grid;grid-template-columns:1fr 1.35fr 1fr;gap:18px;align-items:stretch}.rolePillar{background:white;border:1px solid #d9e9f2;border-radius:24px;padding:20px;box-shadow:0 16px 38px rgba(4,59,104,.08)}.rolePillar h3{font-size:18px;margin:0 0 10px}.rolePillar li{font-size:14.5px;margin:8px 0}.tribeBox{background:linear-gradient(135deg,#f3fbff,#fff);border:2px solid var(--verde)}.miniInteraction .scenario{display:none;margin-top:15px;background:#f5fafc;border:1px dashed #bcd8e8;border-radius:16px;padding:15px;max-width:760px}.miniInteraction .scenario.active{display:block}.operSystem{display:grid;grid-template-columns:170px 1fr 155px 190px;gap:18px;align-items:stretch;margin-top:20px}.opBlock{background:white;border:1px solid #d9e9f2;border-radius:22px;box-shadow:0 16px 38px rgba(4,59,104,.08);padding:18px;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:900;font-size:20px;line-height:1.2;min-height:250px}.opCenter{display:grid;grid-template-rows:1.45fr .9fr;gap:18px}.opWide{min-height:0;display:block;text-align:left}.opWide h3{margin:0 0 14px;font-size:24px;text-align:center}.cycleMoments{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.moment{background:#f5fbfe;border:1px solid #d9e9f2;border-radius:16px;padding:15px;text-align:center}.moment b{display:block;font-size:18px}.moment small{font-size:13px;color:var(--muted)}.opTrack{min-height:130px;font-size:20px}.opEval{min-height:250px}.opTransfer{min-height:250px}.kahootSlide{background:linear-gradient(135deg,var(--morado),var(--morado2));border-radius:34px;min-height:650px;padding:62px;color:white;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}.kahootLogo{font-size:78px;font-weight:1000;letter-spacing:-5px;color:white}.kahootLogo span:nth-child(2){color:#ffd500}.kahootLogo span:nth-child(3){color:#5bbd2f}.kahootLogo span:nth-child(4){color:#2eb3f2}.kahootLogo span:nth-child(5){color:#ff3d57}.kahootTitle{font-size:42px;line-height:1.08;margin:28px 0 16px;color:white}.kahootText{font-size:21px;line-height:1.35;max-width:800px}.kahootBtn{display:inline-block;margin-top:36px;background:rgba(255,255,255,.18);padding:18px 28px;border-radius:20px;font-size:28px;font-weight:900}.pinCard{background:white;color:#411c80;border-radius:28px;padding:34px;text-align:center}.pinBox{border:3px dashed #ae8df5;border-radius:22px;padding:34px 20px;margin:22px 0;font-size:34px;font-weight:900;color:#7a3bf0}.caseHeader{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:18px}.caseCard{background:white;border:1px solid #d9e9f2;border-radius:20px;padding:18px;box-shadow:0 14px 32px rgba(4,59,104,.07)}.caseCard b{display:block;color:var(--azul);font-size:15px;margin-bottom:6px}.caseCard p{margin:0;font-size:16px;line-height:1.35}.roadmapTable{display:grid;grid-template-columns:1.05fr 1.05fr 1.25fr 1.55fr 1.65fr;gap:0;border:1px solid #d9e9f2;border-radius:22px;overflow:hidden;background:white;box-shadow:0 16px 38px rgba(4,59,104,.08)}.rtHead,.rtCell{padding:13px;border-bottom:1px solid #d9e9f2;border-right:1px solid #d9e9f2}.rtHead{background:#eaf5fb;font-weight:1000;color:var(--azul);font-size:14px}.rtCell{font-size:13.2px;line-height:1.25}.rtCell:nth-child(5n){border-right:0}.roadmapTable .closed{color:#28720e;font-weight:900}.roadmapTable .pending{color:#b77700;font-weight:900}.simOverview{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:24px}.simEpisode{background:white;border:1px solid #d9e9f2;border-radius:24px;padding:24px;min-height:280px;box-shadow:0 16px 38px rgba(4,59,104,.08)}.simEpisode .ep{display:inline-block;background:var(--azul);color:white;border-radius:999px;padding:8px 12px;font-weight:900;margin-bottom:12px}.simEpisode h3{font-size:23px}.simEpisode li{font-size:16px;margin:9px 0}.season{background:linear-gradient(135deg,#072f54,#07599b);color:white;border-radius:30px;padding:28px;margin-bottom:22px;display:flex;align-items:center;justify-content:space-between}.season h2{margin:0;font-size:34px;color:white}.season p{margin:8px 0 0}.seasonTimer{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:20px;padding:12px 14px}.timer{font-size:36px;font-weight:1000;color:white;min-width:128px;text-align:center}.seasonTimer .btn{box-shadow:none;background:white;color:var(--azul);padding:13px 18px}.taskGrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}.taskCard{background:white;border:1px solid #d9e9f2;border-radius:22px;padding:20px;min-height:250px;box-shadow:0 16px 38px rgba(4,59,104,.08)}.taskCard h3{margin:0 0 10px}.taskCard li{font-size:15.5px;margin:8px 0}.inputs{margin-top:20px;background:#f6fbfd;border:1px dashed #bcd8e8;border-radius:20px;padding:18px}.inputs b{color:var(--azul)}.inputs span{display:inline-block;margin:8px 8px 0 0;background:white;border:1px solid #d9e9f2;border-radius:999px;padding:8px 12px;font-weight:800;font-size:13px}.plenary{display:grid;grid-template-columns:1fr 1fr;gap:20px}.bigQuestion{background:white;border:1px solid #d9e9f2;border-radius:24px;padding:26px;font-size:24px;line-height:1.3;font-weight:850;color:var(--azul);box-shadow:0 16px 38px rgba(4,59,104,.08)}.checklist label{display:block;background:#f6fbfd;border:1px solid #d9e9f2;border-radius:14px;padding:13px;margin:10px 0;font-weight:800}.checklist input{transform:scale(1.25);margin-right:10px}.thanks{height:100%;display:grid;place-items:center;text-align:center}.thanksBox{max-width:900px}.thanks h1{font-size:76px;margin:0 0 18px;color:var(--azul);letter-spacing:-2px}.thanks p{font-size:28px;line-height:1.35;color:#124b7c}.thanks .question{margin-top:34px;background:white;border:1px solid #d9e9f2;border-radius:28px;padding:28px;font-size:28px;font-weight:900;color:var(--azul);box-shadow:0 16px 38px rgba(4,59,104,.08)}@media(max-width:1200px){.agendaPath{grid-template-columns:repeat(3,1fr)}.pathItem:after{display:none}.lifeWrap,.hero{grid-template-columns:1fr}.kahootSlide{grid-template-columns:1fr}.operSystem{grid-template-columns:1fr}.caseHeader,.simOverview,.taskGrid{grid-template-columns:1fr}.roadmapTable{font-size:12px;overflow:auto}}
+
+/* --- Ajustes finales: portada, operación viva, caso en 2 láminas, formatos con color --- */
+.people .circle{display:none}
+.people:before{display:none}
+.people:after{display:none}
+.tribuIllustration{
+  position:absolute;
+  inset:30px;
+  border:2px dashed #c7dbe8;
+  border-radius:34px;
+  display:grid;
+  place-items:center;
+}
+.tribuGroup{position:relative;width:410px;height:350px}
+.personIcon{position:absolute;width:118px;height:150px}
+.personIcon .head{width:72px;height:72px;border:9px solid var(--outline);border-radius:50%;background:white;margin:0 auto}
+.personIcon .body{width:112px;height:68px;background:var(--verde);border-radius:34px 34px 18px 18px;margin:-8px auto 0}
+.pTop{left:146px;top:0;--outline:#177320}
+.pLeft{left:28px;top:92px;--outline:#074b7d}
+.pRight{right:28px;top:92px;--outline:#0874c9}
+.pBotL{left:12px;bottom:0;--outline:#6b2bb2}
+.pBotR{right:12px;bottom:0;--outline:#ed9b00}
+.tribuBadge{
+  position:absolute;
+  left:50%;top:54%;
+  transform:translate(-50%,-50%);
+  width:270px;height:128px;
+  background:var(--azul);
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  box-shadow:0 16px 40px rgba(4,59,104,.18);
+}
+.tribuBadgeInner{
+  width:220px;
+  background:white;
+  border:5px solid var(--azul);
+  border-radius:22px;
+  padding:18px 16px;
+  text-align:center;
+  font-weight:1000;
+}
+.tribuBadgeInner small{display:block;color:var(--verde2);font-size:14px;margin-top:6px}
+.opBlock{border-width:2px;align-items:flex-start;justify-content:flex-start;text-align:left;gap:10px;flex-direction:column}
+.opBlock .opIcon{font-size:34px;line-height:1}
+.opBlock .opTitle{font-size:21px;font-weight:1000;line-height:1.1}
+.opBlock .opDesc{font-size:14px;line-height:1.25;color:var(--muted);font-weight:650}
+.opPlan{border-color:#0c3f8f}
+.opTrack{border-color:#0b75c9}
+.opEval{border-color:#6b2bb2}
+.opTransfer{border-color:#ed9b00}
+.opWide{border-color:#16751d}
+.opWide h3{display:flex;align-items:center;justify-content:center;gap:10px;color:var(--azul)}
+.moment:nth-child(1){border-color:#0c3f8f}
+.moment:nth-child(2){border-color:#16751d}
+.moment:nth-child(3){border-color:#6b2bb2}
+.caseContextWrap{display:grid;grid-template-columns:1fr;gap:18px}
+.caseIntroCard{
+  background:white;
+  border:1px solid #d9e9f2;
+  border-radius:24px;
+  padding:22px;
+  box-shadow:0 16px 38px rgba(4,59,104,.08);
+}
+.caseIntroCard h3{margin:0 0 10px;font-size:22px;color:var(--azul)}
+.caseIntroCard p{font-size:22px;line-height:1.42;margin:0}
+.inputs span:nth-child(4n+1){background:#eef7df;border-color:#cfe5a1;color:#49740f}
+.inputs span:nth-child(4n+2){background:#eaf5fb;border-color:#bfe0f1;color:#07599b}
+.inputs span:nth-child(4n+3){background:#f4edff;border-color:#d6bdf6;color:#5c21a5}
+.inputs span:nth-child(4n+4){background:#fff6e2;border-color:#f2d08a;color:#9a6500}
+
+
+/* --- Correcciones finales v6 solicitadas --- */
+
+/* Portada: imagen/ilustración de tribu visible y más parecida a referencia */
+.heroVisual{
+  min-height:470px;
+}
+.tribuIllustration{
+  position:absolute;
+  inset:30px;
+  border:2px dashed #c7dbe8;
+  border-radius:34px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(145deg,#f7fbfd,#eaf5fb);
+}
+.tribuGroup{
+  position:relative;
+  width:430px;
+  height:370px;
+}
+.personIcon{
+  position:absolute;
+  width:124px;
+  height:158px;
+}
+.personIcon .head{
+  width:78px;
+  height:78px;
+  border:9px solid var(--outline);
+  border-radius:50%;
+  background:white;
+  margin:0 auto;
+}
+.personIcon .body{
+  width:118px;
+  height:72px;
+  background:var(--verde);
+  border-radius:34px 34px 18px 18px;
+  margin:-8px auto 0;
+}
+.pTop{left:153px;top:0;--outline:#177320}
+.pLeft{left:28px;top:96px;--outline:#074b7d}
+.pRight{right:28px;top:96px;--outline:#0874c9}
+.pBotL{left:10px;bottom:0;--outline:#6b2bb2}
+.pBotR{right:10px;bottom:0;--outline:#ed9b00}
+.tribuBadge{
+  position:absolute;
+  left:50%;
+  top:54%;
+  transform:translate(-50%,-50%);
+  width:292px;
+  height:136px;
+  background:var(--azul);
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  box-shadow:0 16px 40px rgba(4,59,104,.18);
+}
+.tribuBadgeInner{
+  width:236px;
+  background:white;
+  border:5px solid var(--azul);
+  border-radius:24px;
+  padding:18px 16px;
+  text-align:center;
+  font-weight:1000;
+}
+.tribuBadgeInner small{
+  display:block;
+  color:var(--verde2);
+  font-size:14px;
+  margin-top:6px;
+}
+
+/* Ciclo de vida: evitar choque y dar más ancho al bloque 05 */
+.lifeCycle{
+  height:640px;
+}
+.node.n5{
+  width:250px;
+  left:20px;
+  top:224px;
+}
+.node.n4{
+  left:205px;
+  bottom:26px;
+}
+.node.n3{
+  right:140px;
+  bottom:26px;
+}
+.node.n2{
+  right:24px;
+  top:208px;
+}
+
+/* Operación: bloques con icono + texto explicativo */
+.operSystem{
+  grid-template-columns:190px 1fr 175px 210px;
+}
+.opBlock{
+  border-width:2px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  text-align:left;
+  flex-direction:column;
+  gap:9px;
+}
+.opBlock .opIcon{
+  font-size:34px;
+  line-height:1;
+}
+.opBlock .opTitle{
+  font-size:21px;
+  font-weight:1000;
+  line-height:1.1;
+}
+.opBlock .opDesc{
+  font-size:14px;
+  line-height:1.28;
+  color:var(--muted);
+  font-weight:650;
+}
+.opPlan{border-color:#0c3f8f}
+.opWide{border-color:#16751d}
+.opTrack{border-color:#0b75c9}
+.opEval{border-color:#6b2bb2}
+.opTransfer{border-color:#ed9b00}
+.opWide h3{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+}
+.moment:nth-child(1){border-color:#0c3f8f}
+.moment:nth-child(2){border-color:#16751d}
+.moment:nth-child(3){border-color:#6b2bb2}
+
+/* Simulación: lámina de contexto en dos niveles */
+.caseContextWrap{
+  display:grid;
+  gap:18px;
+}
+.caseIntroCard{
+  background:white;
+  border:1px solid #d9e9f2;
+  border-radius:24px;
+  padding:22px 24px;
+  box-shadow:0 16px 38px rgba(4,59,104,.08);
+}
+.caseIntroCard h3{
+  margin:0 0 10px;
+  font-size:22px;
+  color:var(--azul);
+}
+.caseIntroCard p{
+  margin:0;
+  font-size:21px;
+  line-height:1.42;
+}
+
+
+/* === AJUSTES DEFINITIVOS SOLO EN OBSERVADOS === */
+
+/* 1) Ciclo de vida: layout limpio, alineado y estable */
+.lifeWrap{
+  display:grid !important;
+  grid-template-columns:1fr 340px !important;
+  gap:24px !important;
+  align-items:start !important;
+}
+.lifeCycle{
+  height:640px !important;
+  min-height:640px !important;
+  position:relative !important;
+  overflow:hidden !important;
+}
+.ring{
+  width:360px !important;
+  height:360px !important;
+  left:50% !important;
+  top:52% !important;
+}
+.centerCircle{
+  left:50% !important;
+  top:52% !important;
+  width:205px !important;
+  height:205px !important;
+  font-size:21px !important;
+}
+.node{
+  width:220px !important;
+  min-height:150px !important;
+  padding:14px !important;
+}
+.node.n1{
+  left:50% !important;
+  top:24px !important;
+  transform:translateX(-50%) !important;
+}
+.node.n2{
+  right:34px !important;
+  top:205px !important;
+  transform:none !important;
+}
+.node.n3{
+  right:155px !important;
+  bottom:28px !important;
+  transform:none !important;
+}
+.node.n4{
+  left:155px !important;
+  bottom:28px !important;
+  transform:none !important;
+}
+.node.n5{
+  left:34px !important;
+  top:205px !important;
+  transform:none !important;
+  width:255px !important;
+}
+.node h3{
+  font-size:15px !important;
+  line-height:1.15 !important;
+}
+.node p{
+  font-size:11.6px !important;
+  line-height:1.22 !important;
+}
+.owner{
+  font-size:11px !important;
+  line-height:1.15 !important;
+  padding:7px 9px !important;
+}
+
+/* 2) Operación: misma estructura, pero con icono + explicación visible */
+.operSystem{
+  grid-template-columns:190px 1fr 175px 210px !important;
+  align-items:stretch !important;
+}
+.opBlock{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:flex-start !important;
+  justify-content:center !important;
+  text-align:left !important;
+  gap:8px !important;
+  padding:22px !important;
+  border-width:2.5px !important;
+}
+.opPlan{border-color:#0c3f8f !important}
+.opWide{border-color:#16751d !important}
+.opTrack{border-color:#0b75c9 !important}
+.opEval{border-color:#6b2bb2 !important}
+.opTransfer{border-color:#ed9b00 !important}
+.opIcon{
+  display:block !important;
+  font-size:34px !important;
+  line-height:1 !important;
+  margin-bottom:4px !important;
+}
+.opTitle{
+  display:block !important;
+  font-size:21px !important;
+  line-height:1.1 !important;
+  font-weight:1000 !important;
+}
+.opDesc{
+  display:block !important;
+  font-size:13.5px !important;
+  line-height:1.28 !important;
+  color:#5f7486 !important;
+  font-weight:700 !important;
+}
+.opWide{
+  justify-content:flex-start !important;
+}
+.opWide h3{
+  display:flex !important;
+  justify-content:center !important;
+  align-items:center !important;
+  gap:10px !important;
+  color:var(--azul) !important;
+  margin-bottom:16px !important;
+}
+.opWide h3 span{
+  font-size:30px !important;
+}
+.moment{
+  text-align:center !important;
+  background:#f6fbfd !important;
+}
+.moment:nth-child(1){border-color:#0c3f8f !important}
+.moment:nth-child(2){border-color:#16751d !important}
+.moment:nth-child(3){border-color:#6b2bb2 !important}
+
+/* 3) Historia hasta hoy: más vida en los 3 bloques inferiores */
+.caseHeader{
+  gap:20px !important;
+}
+.caseCard{
+  position:relative !important;
+  overflow:hidden !important;
+  border-width:2px !important;
+  padding:22px 22px 22px 78px !important;
+  min-height:178px !important;
+}
+.caseCard:before{
+  position:absolute !important;
+  left:22px !important;
+  top:24px !important;
+  width:40px !important;
+  height:40px !important;
+  border-radius:14px !important;
+  display:grid !important;
+  place-items:center !important;
+  font-size:23px !important;
+  font-weight:900 !important;
+}
+.caseCard:nth-child(1){
+  border-color:#0c3f8f !important;
+  background:linear-gradient(135deg,#ffffff,#edf7ff) !important;
+}
+.caseCard:nth-child(1):before{
+  content:"👥";
+  background:#eaf5fb;
+}
+.caseCard:nth-child(2){
+  border-color:#9cc338 !important;
+  background:linear-gradient(135deg,#ffffff,#f5fbeb) !important;
+}
+.caseCard:nth-child(2):before{
+  content:"🎯";
+  background:#eef7df;
+}
+.caseCard:nth-child(3){
+  border-color:#6b2bb2 !important;
+  background:linear-gradient(135deg,#ffffff,#f5efff) !important;
+}
+.caseCard:nth-child(3):before{
+  content:"⭐";
+  background:#f0e8ff;
+}
+.caseCard b{
+  font-size:15px !important;
+  letter-spacing:.01em !important;
+}
+.caseCard p{
+  font-size:18px !important;
+  line-height:1.35 !important;
+}
+
+/* 4) Chips de formatos/insumos: colores más vivos */
+.inputs{
+  background:linear-gradient(135deg,#ffffff,#f4fbff) !important;
+  border:2px dashed #b9d9ea !important;
+}
+.inputs b{
+  font-size:15px !important;
+}
+.inputs span{
+  border-width:2px !important;
+  font-weight:900 !important;
+  box-shadow:0 6px 14px rgba(4,59,104,.06) !important;
+}
+.inputs span:nth-child(4n+1){
+  background:#eaf5fb !important;
+  border-color:#0b75c9 !important;
+  color:#043b68 !important;
+}
+.inputs span:nth-child(4n+2){
+  background:#eef7df !important;
+  border-color:#9cc338 !important;
+  color:#3f6b0b !important;
+}
+.inputs span:nth-child(4n+3){
+  background:#f2e9ff !important;
+  border-color:#8e53db !important;
+  color:#4b168c !important;
+}
+.inputs span:nth-child(4n+4){
+  background:#fff3d3 !important;
+  border-color:#f4a000 !important;
+  color:#875800 !important;
+}
+
+
+/* Ajustes v8 solicitados */
+.node{min-height:170px !important; display:flex !important; flex-direction:column !important;}
+.node p{flex:1 !important;}
+.node.n1,.node.n2,.node.n3,.node.n4{width:235px !important;}
+.node.n5{width:265px !important;}
+.owner{margin-top:auto !important;}
+.cycleDurationNote{
+  margin:14px 0 0;
+  text-align:center;
+  font-weight:900;
+  color:var(--azul);
+  background:#eef7df;
+  border:1px solid #cfe5a1;
+  border-radius:999px;
+  padding:9px 14px;
+}
+.contextCallout{
+  margin-top:18px;
+  background:#eef7df;
+  border:2px solid #9cc338;
+  border-radius:18px;
+  padding:16px 18px;
+  color:#3f6b0b;
+  font-size:22px;
+  font-weight:1000;
+}
+
+
+.node.n4{left:180px!important;bottom:18px!important;}
+.node.n3{right:165px!important;bottom:18px!important;}
+.node.n5{left:45px!important;width:300px!important;}
+.cycleDurationNote{
+max-width:320px!important;
+margin:12px auto 0 auto!important;
+font-size:16px!important;
+padding:6px 12px!important;
+}
+
+</style>
+</head>
+<body>
+<div class="app"><aside class="sidebar"><div class="brand"><div class="logo">ADEX</div><small>Activando Tribus<br><b>Cómo generar valor</b></small></div><div class="line"></div><nav class="nav" id="nav"></nav><div class="foot">Taller práctico · Viernes 26 de junio, 2026<br>Manual de Operación de Tribus<br><br>Elaborado por AmbideXtro</div></aside><main class="main"><div class="progress" id="progress"></div>
+<section class="slide active" data-section="Inicio"><div class="hero"><div><span class="kicker">Taller práctico</span><h1 class="h1">Activando Tribus ADEX:<br>Cómo organizarnos para generar valor</h1><p class="sub">Viernes 26 de junio, 2026</p><button class="btn" onclick="next()">Iniciar taller →</button></div><div class="heroVisual">
+      <div class="tribuIllustration">
+        <div class="tribuGroup">
+          <div class="personIcon pTop"><div class="head"></div><div class="body"></div></div>
+          <div class="personIcon pLeft"><div class="head"></div><div class="body"></div></div>
+          <div class="personIcon pRight"><div class="head"></div><div class="body"></div></div>
+          <div class="personIcon pBotL"><div class="head"></div><div class="body"></div></div>
+          <div class="personIcon pBotR"><div class="head"></div><div class="body"></div></div>
+          <div class="tribuBadge"><div class="tribuBadgeInner">TRIBU ADEX<small>colaboración · evidencia · valor</small></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="slide" data-section="Inicio"><span class="kicker">🎯 Objetivo</span><h2 class="h2">¿Qué lograremos hoy?</h2><div class="objectives"><ul><li>Comprender cómo opera una tribu.</li><li>Comprender con quiénes articula una tribu.</li><li>Organizar su trabajo durante el trimestre.</li><li>Planificar y gestionar ciclos de trabajo.</li><li>Dar seguimiento a avances y bloqueos.</li></ul></div></section>
+<section class="slide" data-section="Inicio"><span class="kicker">🧭 Ruta del taller</span><h2 class="h2">De comprender el modelo a tomar decisiones</h2><div class="agendaPath"><div class="pathItem"><div class="pathIcon">📘</div><b>Comprender</b><small>Conceptos clave para operar una tribu.</small></div><div class="pathItem"><div class="pathIcon">👥</div><b>Ubicar roles</b><small>Qué hace la tribu, la línea y el Comité.</small></div><div class="pathItem"><div class="pathIcon">🎮</div><b>Activar</b><small>Kahoot breve para reforzar conceptos.</small></div><div class="pathItem"><div class="pathIcon">🎬</div><b>Simular</b><small>Vivir tres temporadas de operación.</small></div><div class="pathItem"><div class="pathIcon">✅</div><b>Aplicar</b><small>Cerrar con aprendizajes y decisiones.</small></div></div></section>
+<section class="slide" data-section="Comprendiendo"><span class="kicker">📘 Concepto base</span><h2 class="h2">¿Qué es una tribu?</h2><div class="definition"><p class="quote">Una tribu es un equipo multidisciplinario conformado para abordar retos estratégicos que requieren colaboración transversal sostenida para construir nuevas capacidades, validar soluciones o habilitar cambios estratégicos.</p></div><div class="twoLists"><div class="listBox"><h3>Una tribu NO es</h3><ul><li>Un comité adicional.</li><li>Una reunión periódica sin entregables.</li><li>Un proyecto tradicional con solución totalmente conocida.</li></ul></div><div class="listBox"><h3>Una tribu SÍ es</h3><ul><li>Un equipo orientado a la exploración y evolución.</li><li>Un espacio de colaboración transversal.</li><li>Un mecanismo para generar evidencia, aprendizaje y valor.</li></ul></div></div></section>
+<section class="slide" data-section="Comprendiendo"><span class="kicker">🔄 Ciclo de vida</span><h2 class="h2">Las tribus avanzan por etapas</h2><div class="lifeWrap"><div class="lifeCycle"><div class="ring"></div><div class="centerCircle">CICLO DE VIDA<br>DE LAS TRIBUS</div><div class="node n1"><div class="num">01</div><h3>Identificación del reto</h3><p>Se identifica un desafío estratégico que requiere abordaje transversal.</p><span class="owner">Responsable: Comité</span></div><div class="node n2"><div class="num">02</div><h3>Conformación</h3><p>Se define equipo base, liderazgo y capacidades necesarias. Se elabora Ficha de Sincronización v0.</p><span class="owner">Responsable: Comité + Responsable Línea</span></div><div class="node n3"><div class="num">03</div><h3>Activación</h3><p>Se formaliza la puesta en marcha y se valida Ficha de Sincronización.</p><span class="owner">Responsable: Líder Tribu + Responsable Línea</span></div><div class="node n4"><div class="num">04</div><h3>Operación</h3><p>La tribu moviliza el reto y gestiona avances, riesgos y decisiones.</p><span class="owner">Responsable: Tribu</span></div><div class="node n5"><div class="num">05</div><h3>Transferencia y continuidad o cierre</h3><p>Se define transferencia, continuidad o cierre de la tribu.</p><span class="owner">Responsable: Comité + Responsable Línea + Líder Tribu</span></div></div><div class="lifeNote"><h3>En este taller</h3><p class="p">Nos enfocaremos en la etapa de <b>Operación</b>, especialmente en las actividades de planificación y validación.</p><div class="callout"><h3>Idea clave</h3><p style="margin:0">Una tribu no nace para reunirse. Nace para mover un reto estratégico hasta resolverlo, estabilizarlo o transferirlo.</p></div></div></div></section>
+<section class="slide" data-section="Comprendiendo"><span class="kicker">👥 Roles</span><h2 class="h2">La tribu no opera sola</h2><div class="roleMap"><div class="rolePillar"><h3>Comité de Transformación</h3><ul><li>Supervisa avances.</li><li>Conecta dependencias.</li><li>Escala decisiones institucionales.</li><li>Evalúa continuidad o cierre.</li></ul></div><div class="rolePillar tribeBox"><h3>Tribu</h3><div class="grid cols2" style="gap:12px"><div><b>Líder de Tribu</b><ul><li>Convoca espacios.</li><li>Facilita el trabajo.</li><li>Da seguimiento.</li><li>Canaliza escalamiento.</li></ul></div><div><b>Integrantes</b><ul><li>Participan activamente.</li><li>Ejecutan compromisos.</li><li>Generan evidencia.</li><li>Comparten aprendizajes.</li></ul></div></div></div><div class="rolePillar"><h3>Responsable de línea</h3><ul><li>Orienta prioridades del negocio.</li><li>Facilita articulación.</li><li>Destraba bloqueos de línea.</li><li>Valida conexión con valor.</li></ul></div></div><div class="miniInteraction card" style="margin-top:18px;max-width:1120px"><h3>Mini decisión</h3><p>¿Quién debería intervenir si la tribu no logra acceder a información clave de la línea?</p><button class="btn secondary" onclick="showScenario()">Ver respuesta sugerida</button><div class="scenario" id="scenario">Primero debería intervenir el <b>Responsable de Línea</b>. Si el bloqueo excede su ámbito o compromete resultados institucionales, se escala al <b>Comité de Transformación</b>.</div></div></section>
+<section class="slide" data-section="Comprendiendo"><span class="kicker">⚙️ Operación</span><h2 class="h2">¿Cómo opera una tribu?</h2><p class="p">La operación combina planificación, desarrollo de ciclos, seguimiento, evaluación y decisiones de transferencia o continuidad.</p><div class="operSystem">
+    <div class="opBlock opPlan">
+      <div class="opIcon">🎯</div>
+      <div class="opTitle">Planificación trimestral</div>
+      <div class="opDesc">Define objetivo y roadmap para orientar el trabajo del trimestre.</div>
+    </div>
+    <div class="opCenter">
+      <div class="opBlock opWide">
+        <h3><span>🔁</span>Desarrollo de ciclos de trabajo</h3>
+        <div class="cycleMoments">
+          <div class="moment"><b>Planificación</b><small>Actividades, resultado específico, evidencias y criterios de éxito.</small></div>
+          <div class="moment"><b>Ejecución</b><small>Desarrollo de compromisos y generación de entregables.</small></div>
+          <div class="moment"><b>Validación</b><small>Revisión de resultados, evidencias, aprendizajes y decisiones.</small></div>
+        </div><p class="cycleDurationNote">Cada ciclo puede durar 15 o 30 días.</p>
+      </div>
+      <div class="opBlock opTrack">
+        <div class="opIcon">📊</div>
+        <div class="opTitle">Seguimiento de avances y gestión de bloqueos</div>
+        <div class="opDesc">Da visibilidad al avance, identifica riesgos y activa apoyos oportunamente.</div>
+      </div>
+    </div>
+    <div class="opBlock opEval">
+      <div class="opIcon">🧾</div>
+      <div class="opTitle">Evaluación trimestral</div>
+      <div class="opDesc">Revisa cumplimiento de objetivo, aprendizajes, evidencias y decisiones adoptadas.</div>
+    </div>
+    <div class="opBlock opTransfer">
+      <div class="opIcon">🚀</div>
+      <div class="opTitle">Transferencia y cierre o continuidad</div>
+      <div class="opDesc">Define qué se transfiere, quién recibe y si la tribu continúa o cierra.</div>
+    </div>
+  </div></section>
+<section class="slide" data-section="Kahoot"><div class="kahootSlide"><div><div class="kahootLogo"><span>K</span><span>a</span><span>h</span><span>o</span><span>o</span><span>t!</span></div><h2 class="kahootTitle">Desafío Tribus ADEX</h2><p class="kahootText">Resolveremos preguntas rápidas para reforzar los conceptos clave antes de entrar a la simulación.</p><div class="kahootBtn">kahoot.it</div></div><div class="pinCard"><h3>PIN DEL JUEGO</h3><div class="pinBox">Código Kahoot</div><p><b>Ingresa a kahoot.it y utiliza el PIN proyectado para unirte.</b></p></div></div></section>
+<section class="slide" data-section="Simulación">
+  <span class="kicker">🎬 Simulación</span><h2 class="h2">La historia hasta hoy</h2>
+  <div class="caseContextWrap">
+    <div class="caseIntroCard"><h3>Contexto del caso</h3><p>La tribu ya fue activada, ya se llevó a cabo la sesión de sincronización y cuentan con la Ficha de Sincronización validada.</p><div class="contextCallout">Ahora corresponde ejecutar su planificación trimestral y empezar a operar.</div></div>
+    <div class="caseHeader"><div class="caseCard"><b>Nombre completo de la tribu</b><p>Tribu Nueva Experiencia de Matrícula</p></div><div class="caseCard"><b>Enunciado completo del reto</b><p>Diseñar y validar un nuevo modelo de experiencia de matrícula que permita a ADEX incrementar su capacidad de convertir prospectos en estudiantes, explorando qué combinación de intervenciones digitales, operativas y comunicacionales genera el mayor valor para los futuros estudiantes.</p></div><div class="caseCard"><b>Beneficiarios</b><p>Estudiantes, responsables académicos, admisión, atención al estudiante y equipos operativos vinculados al proceso de matrícula.</p></div></div>
+  </div>
+</section>
+
+<section class="slide" data-section="Simulación"><span class="kicker">🎬 Simulación</span><h2 class="h2">Las tres temporadas que vivirán</h2><div class="simOverview"><div class="simEpisode"><span class="ep">Temporada 1 · 25 min</span><h3>Planificar el Trimestre</h3><ul><li>Analizar ficha de sincronización.</li><li>Definir el objetivo del trimestre.</li><li>Definir el roadmap para los esfuerzos del trimestre.</li></ul></div><div class="simEpisode"><span class="ep">Temporada 2 · 20 min</span><h3>Planificar el 1er Ciclo</h3><ul><li>Completar la planificación del primer ciclo.</li><li>Definir actividades.</li><li>Definir resultado específico, evidencias y criterios de éxito.</li></ul></div><div class="simEpisode"><span class="ep">Temporada 3 · 20 min</span><h3>Validar el resultado del 1er Ciclo</h3><ul><li>Realizar la sesión de validación.</li><li>Completar el reporte de avance al Comité.</li><li>Analizar evidencias y aprendizajes.</li></ul></div></div></section>
+<section class="slide" data-section="Simulación"><div class="season"><div><h2>🎬 Temporada 1</h2><p>Planificando el Trimestre</p></div><div class="seasonTimer"><div class="timer" id="timer1">25:00</div><button class="btn" onclick="startTimer('timer1',25)">Iniciar</button></div></div><div class="taskGrid"><div class="taskCard"><h3>Consideraciones</h3><ul><li>La tribu cuenta con una Ficha de Sincronización validada.</li><li>El reto aún tiene incertidumbre: no existe una solución definida.</li><li>La planificación trimestral debe orientar la exploración y evolución del reto.</li></ul></div><div class="taskCard"><h3>Actividades</h3><ul><li>Analizar ficha de sincronización.</li><li>Definir el objetivo del trimestre.</li><li>Definir el roadmap para los esfuerzos del trimestre.</li></ul></div><div class="taskCard"><h3>Resultados esperados</h3><ul><li>Objetivo trimestral formulado.</li><li>Roadmap trimestral definido.</li><li>Secuencia de ciclos acordada.</li><li>Foco de exploración del trimestre claro.</li></ul></div></div><div class="inputs"><b>Insumos / formatos:</b><br><span>Ficha de Sincronización validada</span><span>Formato de Planificación Trimestral</span></div></section>
+<section class="slide" data-section="Simulación"><div class="season"><div><h2>🎬 Temporada 2</h2><p>Planificando el 1er Ciclo</p></div><div class="seasonTimer"><div class="timer" id="timer2">20:00</div><button class="btn" onclick="startTimer('timer2',20)">Iniciar</button></div></div><div class="taskGrid"><div class="taskCard"><h3>Consideraciones</h3><ul><li>El primer ciclo debe contribuir al objetivo trimestral.</li><li>El foco debe ser acotado y gestionable.</li><li>Los criterios de éxito deben permitir validar si el ciclo logró su resultado.</li></ul></div><div class="taskCard"><h3>Actividades</h3><ul><li>Completar la planificación del primer ciclo.</li><li>Definir actividades del ciclo.</li><li>Definir resultado específico, evidencias y criterios de éxito.</li></ul></div><div class="taskCard"><h3>Resultados esperados</h3><ul><li>Planificación del primer ciclo completa.</li><li>Actividades priorizadas.</li><li>Resultado específico del ciclo definido.</li><li>Evidencias y criterios de éxito establecidos.</li></ul></div></div><div class="inputs"><b>Insumos / formatos:</b><br><span>Planificación trimestral</span><span>Formato de Planificación de Ciclos</span></div></section>
+<section class="slide" data-section="Simulación"><div class="season"><div><h2>🎬 Temporada 3</h2><p>Validando el resultado del 1er Ciclo</p></div><div class="seasonTimer"><div class="timer" id="timer3">20:00</div><button class="btn" onclick="startTimer('timer3',20)">Iniciar</button></div></div><div class="taskGrid"><div class="taskCard"><h3>Consideraciones</h3><ul><li>La validación se realiza al cierre del ciclo.</li><li>La conversación debe basarse en evidencias, no en percepciones generales.</li><li>El reporte debe permitir al Comité entender avances, aprendizajes y bloqueos.</li></ul></div><div class="taskCard"><h3>Actividades</h3><ul><li>Realizar la sesión de validación.</li><li>Completar el reporte de avance al Comité.</li><li>Analizar evidencias y aprendizajes.</li></ul></div><div class="taskCard"><h3>Resultados esperados</h3><ul><li>Resultado del ciclo validado.</li><li>Evidencias y aprendizajes registrados.</li><li>Riesgos o bloqueos identificados.</li><li>Reporte de avance listo para Comité.</li></ul></div></div><div class="inputs"><b>Insumos / formatos:</b><br><span>Planificación del 1er Ciclo</span><span>Formato de Seguimiento / Reporte de Avance</span><span>Evidencias simuladas por el equipo</span></div></section>
+<section class="slide" data-section="Simulación"><span class="kicker">🗣️ Plenario</span><h2 class="h2">Compartimos decisiones</h2><div class="plenary"><div class="card"><h3>Una tribu presenta</h3><ul><li>Cómo definió el objetivo trimestral.</li><li>Cómo estructuró el roadmap.</li><li>Cómo planificó el primer ciclo.</li><li>Cómo validó resultados de un ciclo.</li></ul></div><div class="bigQuestion">Las demás tribus responden:<br><br>¿Qué hicimos igual, qué hicimos diferente y qué evidencia nos llevó a ajustar?</div></div></section>
+<section class="slide" data-section="Cierre"><span class="kicker">✅ Cierre</span><h2 class="h2">Mañana empieza la operación real</h2><div class="grid cols2"><div class="card checklist"><label><input type="checkbox"> Comprendo el propósito de una tribu.</label><label><input type="checkbox"> Sé cómo se organiza el trabajo en ciclos.</label><label><input type="checkbox"> Sé cómo validar resultados y aprendizajes.</label><label><input type="checkbox"> Sé cómo articular con otros actores para gestionar bloqueos.</label></div><div class="callout"><h3>Mensaje final</h3><p class="p" style="color:white;margin:0">Activar una tribu no es crear más reuniones. Es organizar capacidades para aprender, decidir y generar valor institucional.</p></div></div></section>
+<section class="slide finalSlide" data-section="Cierre"><div class="thanks"><div class="thanksBox"><h1>Gracias</h1><p>Activar una tribu es organizar capacidades para generar valor.</p><div class="question">¿Qué será lo primero que harán cuando inicien la operación de su tribu?</div></div></div></section>
+<div class="controls" id="controls"><button class="btn secondary" onclick="prev()">← Anterior</button><button class="btn" onclick="next()">Siguiente →</button></div>
+</main></div>
+<script>
+const slides=[...document.querySelectorAll('.slide')];let current=0;const nav=document.getElementById('nav');const sections=[{name:'1. Inicio',count:'3',key:'Inicio'},{name:'2. Comprendiendo las Tribus',count:'4',key:'Comprendiendo'},{name:'3. Kahoot',count:'1',key:'Kahoot'},{name:'4. Simulación',count:'6',key:'Simulación'},{name:'5. Cierre',count:'2',key:'Cierre'}];sections.forEach(sec=>{const b=document.createElement('button');b.innerHTML=sec.name+'<span class="count">'+sec.count+'</span>';b.onclick=()=>go(slides.findIndex(s=>s.dataset.section===sec.key));nav.appendChild(b)});function currentSectionIndex(){const sec=slides[current].dataset.section;return sections.findIndex(s=>s.key===sec)}function render(){slides.forEach((s,i)=>s.classList.toggle('active',i===current));[...nav.children].forEach((b,i)=>b.classList.toggle('active',i===currentSectionIndex()));document.getElementById('progress').style.width=((current+1)/slides.length*100)+'%';document.getElementById('controls').style.display=(current===0||current===slides.length-1)?'none':'flex'}function go(i){current=Math.max(0,Math.min(slides.length-1,i));render()}function next(){go(current+1)}function prev(){go(current-1)}document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')next();if(e.key==='ArrowLeft')prev()});function showScenario(){document.getElementById('scenario').classList.toggle('active')}let timers={};function startTimer(id,minutes){if(timers[id]) clearInterval(timers[id]);let remaining=minutes*60;const el=document.getElementById(id);function tick(){const m=Math.floor(remaining/60).toString().padStart(2,'0');const s=(remaining%60).toString().padStart(2,'0');el.textContent=m+':'+s;if(remaining<=0){clearInterval(timers[id]);el.textContent='Tiempo';return}remaining--}tick();timers[id]=setInterval(tick,1000)}render();
+</script>
+</body>
+</html>
